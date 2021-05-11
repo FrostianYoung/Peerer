@@ -1,0 +1,4 @@
+<!--pages/login/login.wxml-->
+<view>
+  <button class="loginBtn" bindtap="loadPages">进入主页</button>
+</view>

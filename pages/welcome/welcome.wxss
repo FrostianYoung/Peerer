@@ -1,0 +1,56 @@
+/* pages/welcome/welcome.wxss */
+
+page {
+  background-color: white;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 28rpx;
+}
+
+.logo {
+  display: flex;
+  height: 200rpx;
+  justify-content: center;
+}
+
+.logo image {
+  width: 2rpx;
+}
+
+.introduction {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx;
+  font-size: 24rpx;
+}
+
+.welcome-icon {
+  height: 24rpx;
+  width: 24rpx;
+}
+.tag {
+  width: 100rpx;
+  margin: 5rpx;
+  background-color: teal;
+}
+
+.loginBtn {
+  width: 20%;
+  background-color: turquoise;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 98rpx;
+}
+.loginBtn::after {
+  border-radius: 98rpx;
+}

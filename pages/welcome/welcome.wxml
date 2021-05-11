@@ -1,0 +1,22 @@
+<!--pages/welcome/welcome.wxml-->
+<view class='container'>
+  <image class="logo" src="../../images/logo.png"></image>
+  <view class="introduction">
+    <text class="welInfo">Hi</text>
+    <image class="welcome-icon" src="../../images/welcome/welcome-icon1"></image>
+    <text>欢迎来到peer!</text>
+    <text>Peer是大学生云上社交圈</text>
+    <image class="welcome-icon" src="../../images/welcome/welcome-icon2"></image>
+    <text>在这里 你能关联
+    </text>
+    <text class="tag">专业研究</text>
+    <text class="tag">实习经历</text>
+    <text class="tag">日常爱好</text>
+    <text class="tag">未来规划</text>
+    <text>相关的peers</text>
+    <text>欢迎成为种子用户</text>
+    <text>结识志同道合的同龄人</text>
+    <image class="welcome-icon" src="../../images/welcome/welcome-icon3"></image>
+  </view>
+  <button class="loginBtn" bindtap="loadLoginPage">登录 Peer→</button>
+</view>

@@ -1,0 +1,15 @@
+<!--pages/mine/mine.wxml-->
+<view class='container'>
+  <view class="head">
+    <image class="logo" src="../../images/logo.png" mode="cover"></image>
+  </view>
+  <view class="userinfo">
+    <image class="userinfo-avatar" src="../../images/avatar.png" mode="cover"></image>
+    <text class="userinfo-nickname">Username</text>
+    <text class="userinfo-description">一句话介绍自己</text>
+    <button class="userinfo-editor" bindtap="userinfoEditor">用户信息</button>
+  </view>
+  <view class="usercard">
+    
+  </view>
+</view>
