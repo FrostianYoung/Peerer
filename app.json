@@ -1,41 +1,50 @@
 {
   "pages":[
+    "pages/login/login",
+    "pages/mine/mine",
+    
+    "pages/index/index",
+    
     "pages/welcome/welcome",
+    
+    
+    
     "pages/association/association",
     "pages/find/find",
     "pages/message/message",
-    "pages/mine/mine",
-    "pages/index/index",
-    "pages/logs/logs",
-    "pages/login/login"
+    
+    
+    "pages/logs/logs"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "list":[{
       "pagePath": "pages/association/association",
       "text":"关联",
-      "iconPath": "images/tarBar/association1.png",
-      "selectedIconPath": "images/tarBar/association2.png"
+      "iconPath": "images/icons/icon_association.png",
+      "selectedIconPath": "images/icons/icon_association_HL.png"
     }, {
       "pagePath": "pages/find/find",
       "text":"发现",
-      "iconPath": "images/tarBar/find1.png",
-      "selectedIconPath": "images/tarBar/find2.png"
+      "iconPath": "images/icons/icon_find.png",
+      "selectedIconPath": "images/icons/icon_find_HL.png"
     }, {
       "pagePath": "pages/message/message",
       "text":"消息",
-      "iconPath": "images/tarBar/message1.png",
-      "selectedIconPath": "images/tarBar/message2.png"
+      "iconPath": "images/icons/icon_message.png",
+      "selectedIconPath": "images/icons/icon_message_HL.png"
     }, {
       "pagePath": "pages/mine/mine",
       "text":"我的",
-      "iconPath": "images/tarBar/mine1.png",
-      "selectedIconPath": "images/tarBar/mine2.png"
+      "iconPath": "images/icons/icon_mine.png",
+      "selectedIconPath": "images/icons/icon_mine_HL.png"
     }]
   },
   "style": "v2",

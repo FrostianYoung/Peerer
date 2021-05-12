@@ -1,23 +1,30 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<association wx:if="{{PageCur=='association'}}"></association>
+<find wx:if="{{PageCur=='find'}}"></find>
+<message wx:if="{{PageCur=='message'}}"></message>
+<mine wx:if="{{PageCur=='mine'}}"></mine>
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="association">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/icons/icon_association{{PageCur=='association'?'_HL':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='association'?'text-blue':'text-gray'}}">关联</view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="action" bindtap="NavChange" data-cur="find">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/icons/icon_find{{PageCur=='find'?'_HL':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='find'?'text-blue':'text-gray'}}">发现</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="message">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/icons/icon_message{{PageCur=='message'?'_HL':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='message'?'text-blue':'text-gray'}}">消息</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="mine">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/icons/icon_mine{{PageCur=='mine'?'_HL':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='mine'?'text-blue':'text-gray'}}">我的</view>
   </view>
 </view>

@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "association": "/pages/association/association",
+    "find": "/pages/find/find",
+    "message": "/pages/message/message",
+    "mine": "/pages/mine/mine"
+  }
 }

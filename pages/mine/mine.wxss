@@ -1,7 +1,11 @@
 /* pages/mine/mine.wxss */
-page {
+
+.logo {
+  display: flex;
+  justify-content: center;
   background-color: white;
 }
+
 .container {
   width: 100%;
   height: 100%;
@@ -9,12 +13,7 @@ page {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 28rpx;
-}
-
-.head {
-  height: 20rpx;
-  justify-content: center;
+  padding-top: 24rpx;
 }
 
 .userinfo {
@@ -22,10 +21,10 @@ page {
   flex-direction: row;
   align-items: center;
   width: 100%;
-  position: fixed;
 }
 
 .userinfo-avatar {
+  margin-left: 30rpx;
   width: 150rpx;
   height: 150rpx;
   margin: 30rpx;
@@ -33,5 +32,57 @@ page {
 }
 
 .userinfo-nickname {
-  font-size: 42rpx;
+  font-size: 30rpx;
+}
+.userinfo-description {
+  font-size: 24rpx;
+}
+
+.userinfo-button {
+  margin-right: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: gray;
+  border-radius: 50rpx;
+}
+.userinfo-button::after {
+  border-radius: 50rpx;
+  border: 0;
+}
+.btn-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+}
+
+.swiper-tab {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding-bottom: 10px;
+  justify-content: space-around;
+  width: 100%;
+  line-height: 50rpx;
+  background-color: white;
+}
+.on {
+  color: blue;
+}
+.off {
+  color: black;
+}
+.tab-underline {
+  height: 5rpx;
+  background: blue;
+  width: 30rpx;
+  position: absolute;
+  bottom: 0;
+}
+
+.swiper-item {
+  color: black;
+  float: 1;
 }

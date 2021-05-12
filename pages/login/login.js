@@ -16,7 +16,7 @@ Page({
   },
   loadPages: function(param){
     wx.switchTab({
-      url: '/pages/association/association',
+      url: '/pages/mine/mine',
     })
   }
 })

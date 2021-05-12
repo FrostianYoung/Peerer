@@ -1,1 +1,76 @@
 /* pages/login/login.wxss */
+.loginPage {
+  padding: 16px;
+  height: calc(100vh -24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-box-pack: start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+
+.tag {
+  background-color: #e6f2ff;
+  border: none;
+  color: #75aadf;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 700;
+  padding: 3px 6px;
+  margin-left: 3px;
+}
+
+.content {
+  padding-left: 30px;
+  padding-right: 30px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.content>view intro{
+  margin-block-start: .5em;
+  margin-block-end: .5em;
+  -webkit-margin-start: .5em;
+  -webkit-margin-after: .5em;
+}
+.content>view {
+  background-color: #f8fcff;
+  border: 1px solid #c0e1ff;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,.1);
+  color: #666;
+  border-radius: 12px;
+  font-size: 14px;
+  padding: 6px;
+  text-align: center;
+}
+
+.logo {
+  text-align: center;
+}
+.logo>image {
+  width: 224px;
+  height: 149px;
+}
+.loginBtn {
+  margin-top: 20px;
+  padding: 0 50px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.wx_phone {
+  width: 100%;
+  margin: 20px 0;
+  color: #fff;
+  background-color: #1aad19;
+  font-size: 16px;
+}
+.phone {
+  background-color: #96c8fa;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 16px;
+}
