@@ -1,34 +1,32 @@
 <!--pages/login/login.wxml-->
-<view class="loginPage data-type">
-  <view class="logo data-type">
-    <image class="data-type" src="/images/logo.png" style="box-shadow: none;"></image>
+<view class="loginPage">
+  <view class="logo">
+    <image src="/images/logo.png" style="box-shadow: none;"></image>
   </view>
-  <view class="content data-type">
-    <view class="data-type" style="padding: 6px;">
-      <view class="intro data-type">Hi 🎐 欢迎来到Peer！</view>
-      <view class="intro data-type">Peer是云端的大学生社交圈</view>
-      <view class="intro data-type">
-        <text class="data-type" style="margin-right: 4px;">在这里</text>
-        <text class="data-type">你能关联</text>
+  <view class="content">
+    <view class="introTab" style="padding: 6px;">
+      <view class="intro">Hi 🎐 欢迎来到Peer！</view>
+      <view class="intro">Peer是云端的大学生社交圈</view>
+      <view class="intro">
+        <text style="margin-right: 4px;">在这里</text>
+        <text>你能关联</text>
+        <text class="tag">专业研究</text>
       </view>
-      <view class="intro data-type">
-        <view bind: _l="_l" class="tag data-type" color="#6fa9e3">专业研究</view>
-        <view bind: _l="_l" class="tag data-type" color="#6fa9e3">实习经历</view>
+      <view class="intro">
+        <text class="tag">实习经历</text>
+        <text class="tag">日常爱好</text>
+        <text class="tag">未来规划</text>
+        <text style="margin-left: 4px;">相关的Peers</text>
       </view>
-      <view class="intro data-type">
-        <view bind: _l="_l" class="tag data-type" color="#6fa9e3">日常爱好</view>
-        <view bind: _l="_l" class="tag data-type" color="#6fa9e3">未来规划</view>
-        <text class="data-type" style="margin-left: 4px;">相关的Peers</text>
-      </view>
-      <view class="intro data-type">
-        <text class="data-type" style="background-color: transparent;">结识志同道合的同龄人👥</text>
+      <view class="intro">
+        <text style="background-color: transparent;">结识志同道合的同龄人👥</text>
       </view>
     </view>
   </view>
-  <view class="loginBtn data-type" wx:if="{{!isPhoneLogin}}">
-    <button bindgetphonenumber="_getPhone" class="wx_phone data-type"
+  <view class="loginBtn" wx:if="{{!isPhoneLogin}}">
+    <button bindgetphonenumber="_getPhone" class="wx_phone"
       data-event-opts="{{[ [ 'getphonenumber', [ [ 'getPhoneNumber', [ '$event' ] ] ] ] ]}}"
       open-type="getPhoneNumber">微信登录</button>
-    <button bindtap="loadPages" class="phone data-type" data-event-opts="{{[ ['tap', [ [ 'e0', ['$event']]]]]}}">手机号登录</button>
+    <button bindtap="loadPages" class="phone" data-event-opts="{{[ ['tap', [ [ 'e0', ['$event']]]]]}}">手机号登录</button>
   </view>
 </view>

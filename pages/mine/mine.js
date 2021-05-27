@@ -21,5 +21,10 @@ Page({
       TabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
+  },
+  checkAvatar: function(param){ // todo
+    wx.switchTab({
+      url: '/pages/association/association',
+    })
   }
 })

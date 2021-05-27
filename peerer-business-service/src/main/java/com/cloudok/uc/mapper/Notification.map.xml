@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudok.uc.mapper.NotificationMapper">
+	<update id="removeByPostId" parameterType="Map">
+		update uc_notification set deleted=true 
+		where 
+		business_id in (select id from bbs_comment where deleted=false and post_id=#{postId})
+		or business_id in (select id from bbs_collect where deleted=false and business_id = #{postId})
+	</update>
+
+	<update id="deleteByBusinessId" parameterType="Map">
+		update uc_notification
+		set deleted=true where business_id = #{businessId} and business_type =
+		#{businessType}
+	</update>
+	
+	<update id="markAsRead" parameterType="Map">
+		update uc_notification set status =1 , status_ts = current_timestamp() where
+		member_id = #{memberId}
+		and business_type in 
+		<foreach collection="businessTypeList" separator="," open="(" close=")" item="item">
+    		#{item}
+    	</foreach>
+	</update>
+	
+	<update id="markAsReadByIdList" parameterType="Map">
+		update uc_notification set status =1 , status_ts = current_timestamp() where
+		  id in 
+		<foreach collection="idList" separator="," open="(" close=")" item="item">
+    		#{item}
+    	</foreach>
+	</update>
+	
+	
+	<resultMap  type="com.cloudok.uc.po.NotificationTotalPO" id="notificationTotalMap">
+		<result property="businessType" column="business_type"/>
+		<result property="count" column="c_count"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<select id="getTotal" resultMap="notificationTotalMap" parameterType="Map">
+		SELECT t.business_type,t.status,count(1) as c_count FROM cloudok.uc_notification t
+		where t.deleted=false and t.member_id=#{memberId}
+		 group by t.business_type,t.status
+	</select>
+	
+</mapper>

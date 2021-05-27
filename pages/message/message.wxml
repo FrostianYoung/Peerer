@@ -1,2 +1,22 @@
 <!--pages/message/message.wxml-->
-<text>pages/message/message.wxml</text>
+<cu-custom class="logo_nav" bgColor="bg-white">
+  <image src="../../images/logo_mini.png" style="width:59.8px;height:26px;box-shadow:none;"></image>
+</cu-custom>
+<view class="container">
+  <view class="message_content" style="{{'padding-top:'+statusBarHeight+';'}}">
+    <view bindtap="" class="message_box" style="margin-top:0px;">
+      <text class="cuIcon-message lg text-gray"></text>
+      <text class="message_title">评论</text>
+    </view>
+    <view bindtap="" class="message_box" style="margin-top:0px;">
+      <text class="cuIcon-message lg text-gray"></text>
+      <text class="message_title">点赞</text>
+    </view>
+    <view class="note" style="text-align:center;display:block;margin:16px auto;">
+      <view bindtap="" class="empty-title">
+        <text class="cuIcon-mail lg text-gray"></text>
+        <text class="note_title" style="margin-right:4px;font-size:16px;"></text>互可后会有私信箱
+      </view>
+    </view>
+  </view>
+</view>

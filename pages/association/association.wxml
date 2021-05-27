@@ -1,2 +1,4 @@
 <!--pages/association/association.wxml-->
-<text>pages/association/association.wxml</text>
+<cu-custom class="logo_nav" bgColor="bg-white">
+  <image src="../../images/logo_mini.png" style="width:59.8px;height:26px;box-shadow:none;"></image>
+</cu-custom>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudok.authority.mapper.UserMapper">
+	
+	<resultMap extends="com.cloudok.core.mybatis.BaseMapper.baseMap" type="com.cloudok.authority.po.UserPO" id="userMap">
+		
+		<result property="userName" column="user_name"/>
+		
+		<result property="userFullName" column="user_full_name"/>
+		
+		<result property="password" column="password"/>
+		
+		<result property="sex" column="sex"/>
+		
+		<result property="birthDay" column="birth_day"/>
+		
+		<result property="telphone" column="telphone"/>
+		
+		<result property="email" column="email"/>
+		
+		<result property="freeze" column="freeze"/>
+		
+		<result property="avatar" column="avatar"/>
+		
+		<result property="lastLoginTime" column="last_login_time"/>
+		
+		<result property="lastLoginAddr" column="last_login_addr"/>
+		
+	</resultMap>
+
+	<sql id="columns">
+		t.user_name,t.user_full_name,t.password,t.sex,t.birth_day,t.telphone,t.email,t.freeze,t.avatar,t.last_login_time,t.last_login_addr,<include refid="com.cloudok.core.mybatis.BaseMapper.baseColumns"/>
+	</sql>
+	
+	<insert id="create" parameterType="com.cloudok.authority.po.UserPO">
+		insert into sys_user(user_name,user_full_name,password,sex,birth_day,telphone,email,freeze,avatar,last_login_time,last_login_addr,<include refid="com.cloudok.core.mybatis.BaseMapper.insertBaseColumns"/>)
+		values(#{userName},#{userFullName},#{password},#{sex},#{birthDay},#{telphone},#{email},#{freeze},#{avatar},#{lastLoginTime},#{lastLoginAddr},<include refid="com.cloudok.core.mybatis.BaseMapper.insertBaseColumnsValue"/>)
+	</insert>
+	
+	<update id="update" parameterType="com.cloudok.authority.po.UserPO">
+		update sys_user set user_name=#{userName},user_full_name=#{userFullName},password=#{password},sex=#{sex},birth_day=#{birthDay},telphone=#{telphone},email=#{email},freeze=#{freeze},avatar=#{avatar},last_login_time=#{lastLoginTime},last_login_addr=#{lastLoginAddr},<include refid="com.cloudok.core.mybatis.BaseMapper.updateBaseColumns"/>
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.byId"/>
+		</where>
+	</update>
+	
+	<update id="merge" parameterType="com.cloudok.authority.po.UserPO">
+		update sys_user set 
+			
+			<if test="userName != null ">user_name = #{userName},</if>
+			
+			<if test="userFullName != null ">user_full_name = #{userFullName},</if>
+			
+			<if test="password != null ">password = #{password},</if>
+			
+			<if test="sex != null ">sex = #{sex},</if>
+			
+			<if test="birthDay != null ">birth_day = #{birthDay},</if>
+			
+			<if test="telphone != null ">telphone = #{telphone},</if>
+			
+			<if test="email != null ">email = #{email},</if>
+			
+			<if test="freeze != null ">freeze = #{freeze},</if>
+			
+			<if test="avatar != null ">avatar = #{avatar},</if>
+			
+			<if test="lastLoginTime != null ">last_login_time = #{lastLoginTime},</if>
+			
+			<if test="lastLoginAddr != null ">last_login_addr = #{lastLoginAddr},</if>
+			
+			<include refid="com.cloudok.core.mybatis.BaseMapper.updateBaseColumns"/>
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.byId"/>
+		</where>
+	</update>
+	
+	<update id="delete" parameterType="list">
+		<include refid="com.cloudok.core.mybatis.BaseMapper.logicDelete">
+			<property name="tableName" value="sys_user"/>
+		</include>	
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.byIds"></include>
+		</where>
+	</update>
+	
+	<select id="select"
+		parameterType="com.cloudok.core.query.QueryBuilder"
+		resultMap="userMap">
+		select
+		<include refid="columns"></include>
+		from sys_user  t
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.condition"/>
+		</where>
+	</select>
+
+	<select id="count"
+		parameterType="com.cloudok.core.query.QueryBuilder"
+		resultType="long">
+		select
+		count(1)
+		from sys_user t
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.condition"/>
+		</where>
+	</select>
+</mapper>

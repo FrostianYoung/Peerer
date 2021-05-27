@@ -7,24 +7,24 @@
     <view class='cuIcon-cu-image'>
       <image src="/images/icons/icon_association{{PageCur=='association'?'_HL':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='association'?'text-blue':'text-gray'}}">关联</view>
+    <view class="{{PageCur=='association'?'text-tagBlue':'text-gray'}}">关联</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="find">
     <view class='cuIcon-cu-image'>
       <image src="/images/icons/icon_find{{PageCur=='find'?'_HL':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='find'?'text-blue':'text-gray'}}">发现</view>
+    <view class="{{PageCur=='find'?'text-tagBlue':'text-gray'}}">发现</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="message">
     <view class='cuIcon-cu-image'>
       <image src="/images/icons/icon_message{{PageCur=='message'?'_HL':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='message'?'text-blue':'text-gray'}}">消息</view>
+    <view class="{{PageCur=='message'?'text-tagBlue':'text-gray'}}">消息</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="mine">
     <view class='cuIcon-cu-image'>
       <image src="/images/icons/icon_mine{{PageCur=='mine'?'_HL':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='mine'?'text-blue':'text-gray'}}">我的</view>
+    <view class="{{PageCur=='mine'?'text-tagBlue':'text-gray'}}">我的</view>
   </view>
 </view>

@@ -67,6 +67,10 @@ page {
 	--grayShadow: rgba(114, 130, 138, 0.2);
 	--blackShadow: rgba(26, 26, 26, 0.2);
 
+	/* 自定义颜色 */
+	--tabBlueLight: #e6f2ff;
+	--tagBlue: #75aadf;
+
 	background-color: var(--ghostWhite);
 	font-size: 28rpx;
 	color: var(--black);
@@ -3507,6 +3511,10 @@ scroll-view.cu-steps .cu-item {
 	color: var(--darkGray);
 }
 
+.bg-tagBlue {
+	background-color: var(--tagBlueLight);
+	color: var(--tagBlue);
+}
 .bg-shadeTop {
 	background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.01));
 	color: var(--white);
@@ -3938,4 +3946,10 @@ scroll-view.cu-steps .cu-item {
 .line-white,
 .lines-white {
 	color: var(--white);
+}
+
+.text-tagBlue,
+.line-tagBlue,
+.lines-tagBlue {
+	color: var(--tagBlue);
 }

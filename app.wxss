@@ -5,6 +5,7 @@
   font-family: cloudok-icon;
   src: url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff2?t=1620109782871") format("woff2"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff?t=1620109782871") format("woff"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.ttf?t=1620109782871") format("truetype");
 }
+/*
 .container {
   height: 100%;
   display: flex;
@@ -14,7 +15,24 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+*/
 
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24rpx;
+}
+.logo_nav {
+  height: 150rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: white;
+}
 .icon {
   text-align: center;
   font-family: cloudok-icon;

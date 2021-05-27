@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudok.bbs.mapper.PostMapper">
+
+	<select id="getMyCollectPosts" parameterType="Map" resultMap="postMap">
+		select
+		<include refid="columns"></include>
+		from bbs_post t inner join bbs_collect pt on t.id = pt.business_id and
+		pt.deleted=false and t.deleted=false and pt.create_by = #{memberId}
+		limit #{offset},#{pageSize}
+
+	</select>
+
+	<select id="getMyCollectPostsCount" parameterType="Map"
+		resultType="long">
+		select count(1)
+		from bbs_post t inner join bbs_collect pt on t.id = pt.business_id and
+		pt.deleted=false and t.deleted=false and pt.create_by = #{memberId}
+	</select>
+
+	<update id="updateByMember" parameterType="com.cloudok.bbs.po.PostPO">
+		update bbs_post set
+		content=#{content},attach_ids=#{attachIds},topic_type=#{topicType},topic_id=#{topicId},topic_name=#{topicName},topic_icon=#{topicIcon},
+		<include refid="com.cloudok.core.mybatis.BaseMapper.updateBaseColumns" />
+		<where>
+			<include refid="com.cloudok.core.mybatis.BaseMapper.byId" />
+		</where>
+	</update>
+	
+	<select id="getPeersCount" parameterType="Map"
+		resultType="long">
+		select count(distinct t.create_by) from bbs_post t where t.deleted=false and t.topic_id=#{topicId} and t.topic_type=#{topicType}
+	</select>
+	
+	<update id="updateThumbsUpCount" parameterType="Map">
+		update bbs_post set thumbs_up_count = (select count(1) from bbs_thumbs_up where business_id= #{postId} and deleted=false) where id = #{postId}
+	</update>
+	<update id="updateCommentCount" parameterType="Map">
+		update bbs_post set comment_count = (select count(1) from bbs_comment where post_id= #{postId} and deleted=false) where id = #{postId}
+	</update>
+	
+	<resultMap  type="com.cloudok.bbs.po.BBSNotificationPO" id="bbsNotificationMap">
+		<result property="id" column="id"/>
+		<result property="businssId" column="businss_id"/>
+		<result property="createTs" column="create_ts"/>
+		<result property="type" column="type"/>
+		<result property="postId" column="post_id"/>
+		<result property="comment" column="comment_content"/>
+		<result property="content" column="content"/>
+		<result property="attachIds" column="attach_ids"/>
+		<result property="memberId" column="member_id"/>
+	</resultMap>
+
+	<select id="getNotificationList" parameterType="Map" resultMap="bbsNotificationMap">
+		  select * from (SELECT 
+			    t.id,
+			    t.business_id,
+			    1 AS type,
+			    c.create_ts,
+			    c.post_id,
+			    c.content AS comment_content,
+			    p.content,
+			    p.attach_ids,
+			    c.create_by as member_id
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_comment c ON t.business_id = c.id and t.member_id = #{currentUserId} AND t.deleted = FALSE AND c.deleted = FALSE  AND t.`status` = 0   AND t.business_type IN (1 , 3) 
+			        INNER JOIN
+			    bbs_post p ON p.id = c.post_id  AND p.deleted = FALSE
+			        
+			UNION SELECT 
+			    t.id,
+			    t.business_id,
+			    2 AS type,
+			    c.create_ts,
+			    c.business_id as post_id,
+			    '' AS comment_content,
+			    p.content,
+			    p.attach_ids,
+			    c.create_by as member_id
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_thumbs_up c ON t.business_id = c.id  and t.member_id = #{currentUserId}  AND t.deleted = FALSE  AND c.deleted = FALSE   AND t.`status` = 0  AND t.business_type = 2
+			        INNER JOIN
+			    bbs_post p ON p.id = c.business_id   AND p.deleted = FALSE
+			) t  order by t.create_ts desc
+		  limit #{offset},#{pageSize}
+
+	</select>
+
+	<select id="getNotificationCount" parameterType="Map"
+		resultType="long">
+		 select count(1) from (SELECT 
+			    t.id,
+			    t.business_id,
+			    1 AS type,
+			    t.create_ts,
+			    c.post_id,
+			    c.content AS comment_content,
+			    p.content,
+			    p.attach_ids
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_comment c ON t.business_id = c.id and t.member_id = #{currentUserId} AND t.deleted = FALSE AND c.deleted = FALSE  AND t.`status` = 0   AND t.business_type IN (1 , 3) 
+			        INNER JOIN
+			    bbs_post p ON p.id = c.post_id  AND p.deleted = FALSE
+			        
+			UNION SELECT 
+			    t.id,
+			    t.business_id,
+			    2 AS type,
+			    t.create_ts,
+			    c.business_id as post_id,
+			    '' AS comment_content,
+			    p.content,
+			    p.attach_ids
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_thumbs_up c ON t.business_id = c.id  and t.member_id = #{currentUserId}  AND t.deleted = FALSE  AND c.deleted = FALSE   AND t.`status` = 0  AND t.business_type = 2
+			        INNER JOIN
+			    bbs_post p ON p.id = c.business_id   AND p.deleted = FALSE
+			) t   
+	</select>
+	
+	
+	
+	<select id="getNotificationListByType" parameterType="Map" resultMap="bbsNotificationMap">
+		 
+		  <if test="type==1">
+		  	SELECT 
+			    t.id,
+			    t.business_id,
+			    1 AS type,
+			    c.create_ts,
+			    c.post_id,
+			    c.content AS comment_content,
+			    p.content,
+			    p.attach_ids,
+			    c.create_by as member_id
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_comment c ON t.business_id = c.id and t.member_id = #{currentUserId} AND t.deleted = FALSE AND c.deleted = FALSE    AND t.business_type IN (1 , 3) 
+			        INNER JOIN
+			    bbs_post p ON p.id = c.post_id  AND p.deleted = FALSE
+		  </if>
+		 <if test="type==2">
+		 	select
+			    t.id,
+			    t.business_id,
+			    2 AS type,
+			    c.create_ts,
+			    c.business_id as post_id,
+			    '' AS comment_content,
+			    p.content,
+			    p.attach_ids,
+			    c.create_by as member_id
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_thumbs_up c ON t.business_id = c.id  and t.member_id = #{currentUserId}  AND t.deleted = FALSE  AND c.deleted = FALSE    AND t.business_type = 2
+			        INNER JOIN
+			    bbs_post p ON p.id = c.business_id   AND p.deleted = FALSE
+		  </if>
+		  order by t.create_ts desc
+		  
+		  limit #{offset},#{pageSize}
+
+	</select>
+
+	<select id="getNotificationCountByType" parameterType="Map"
+		resultType="long">
+		  <if test="type==1">
+		  	SELECT 
+			  count(1)
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_comment c ON t.business_id = c.id and t.member_id = #{currentUserId} AND t.deleted = FALSE AND c.deleted = FALSE   AND t.business_type IN (1 , 3) 
+			        INNER JOIN
+			    bbs_post p ON p.id = c.post_id  AND p.deleted = FALSE
+		  </if>
+		 <if test="type==2">
+		 	select
+			    count(1)
+			FROM
+			    uc_notification t
+			        INNER JOIN
+			    bbs_thumbs_up c ON t.business_id = c.id  and t.member_id = #{currentUserId}  AND t.deleted = FALSE  AND c.deleted = FALSE     AND t.business_type = 2
+			        INNER JOIN
+			    bbs_post p ON p.id = c.business_id   AND p.deleted = FALSE
+		  </if>
+	</select>
+	
+	<select id="discoverCount" resultType="long">
+		select count(1) from bbs_post t
+		left join uc_recognized t1 on t.create_by = t1.target_id and t1.source_id = #{currentUserId} and t1.deleted=false
+		where (t1.id is not null or t.thumbs_up_count>=3 or t.create_by = #{currentUserId}) and t.deleted=false
+	</select>
+	
+	<select id="discover" resultMap="postMap">
+		select 
+		<include refid="columns"></include>
+		 from bbs_post t
+		left join uc_recognized t1 on t.create_by = t1.target_id and t1.source_id = #{currentUserId} and t1.deleted=false
+		where (t1.id is not null or t.thumbs_up_count>=3 or t.create_by = #{currentUserId}) and t.deleted=false
+		 order by t.create_ts desc
+		  limit #{offset},#{pageSize}
+	</select>
+</mapper>

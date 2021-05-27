@@ -2,20 +2,11 @@
   "pages":[
     "pages/login/login",
     "pages/mine/mine",
-    
     "pages/index/index",
-    
-    "pages/welcome/welcome",
-    
-    
-    
     "pages/association/association",
     "pages/find/find",
     "pages/message/message",
-    
-    
     "pages/logs/logs"
-    
   ],
   "window":{
     "backgroundTextStyle":"light",

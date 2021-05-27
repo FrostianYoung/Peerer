@@ -16,6 +16,7 @@
   background-color: #e6f2ff;
   border: none;
   color: #75aadf;
+  border-radius: 11px;
   font-size: 14px;
   text-align: center;
   line-height: 20px;
