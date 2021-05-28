@@ -1,2 +1,0 @@
-ALTER TABLE `base_tag` 
-CHANGE COLUMN `icon` `icon` VARCHAR(45) NULL DEFAULT NULL COMMENT '标签icon' ;

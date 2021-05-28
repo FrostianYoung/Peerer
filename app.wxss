@@ -1,9 +1,9 @@
 /**app.wxss**/
-@import "./colorui/main.wxss";
-@import "./colorui/icon.wxss";
+@import "./icon_peer.wxss";
 @font-face {
   font-family: cloudok-icon;
-  src: url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff2?t=1620109782871") format("woff2"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff?t=1620109782871") format("woff"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.ttf?t=1620109782871") format("truetype");
+  src: url("//at.alicdn.com/t/font_2354786_ddnj1ahivr.js") 
+  format("woff2"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff?t=1620109782871") format("woff"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.ttf?t=1620109782871") format("truetype");
 }
 /*
 .container {

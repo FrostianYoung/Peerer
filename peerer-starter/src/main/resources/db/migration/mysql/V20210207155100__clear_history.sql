@@ -1,1 +1,0 @@
-delete from uc_recognized;

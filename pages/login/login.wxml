@@ -19,14 +19,13 @@
         <text style="margin-left: 4px;">相关的Peers</text>
       </view>
       <view class="intro">
+        <text style="background-color: transparent;">欢迎成为种子用户\n</text>
         <text style="background-color: transparent;">结识志同道合的同龄人👥</text>
       </view>
     </view>
   </view>
   <view class="loginBtn" wx:if="{{!isPhoneLogin}}">
-    <button bindgetphonenumber="_getPhone" class="wx_phone"
-      data-event-opts="{{[ [ 'getphonenumber', [ [ 'getPhoneNumber', [ '$event' ] ] ] ] ]}}"
-      open-type="getPhoneNumber">微信登录</button>
-    <button bindtap="loadPages" class="phone" data-event-opts="{{[ ['tap', [ [ 'e0', ['$event']]]]]}}">手机号登录</button>
+    <button bindgetphonenumber="getPhoneNumber" open-type="getPhoneNumber" class="wx_phone" >微信登录</button>
+    <button bindtap="loginPages" class="phone" data-event-opts="{{[ ['tap', [ [ 'e0', ['$event']]]]]}}">手机号登录</button>
   </view>
 </view>

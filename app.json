@@ -1,21 +1,40 @@
 {
   "pages":[
+    "pages/association/association",
     "pages/login/login",
     "pages/mine/mine",
-    "pages/index/index",
-    "pages/association/association",
+    "components/component/friend",
+    "components/component/peerCircle",
+    "components/component/userInfo",
+    "components/component/messageDetial",
+    "components/component/friendZoneCircle",
+    "components/component/friendZoneDetail",
+    "components/component/settingBaseInfo",
     "pages/find/find",
+    "components/component/publishFriendZone",
     "pages/message/message",
-    "pages/logs/logs"
+    "components/component/friendZoneNewReply_1",
+    "components/component/friendZoneNewReply_2",
+    "components/component/home/eduInfoEdit",
+    "components/component/home/researchInfoEdit",
+    "components/component/home/internshipInfoEdit",
+    "components/component/home/projectInfoEdit",
+    "components/component/home/personalityInfoEdit",
+    "components/component/home/statementTagInfoEdit"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#F8F8F8",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle":"black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "backgroundColor": "#F8F8F8",
+    "backgroundTextStyle":"light"
   },
   "tabBar": {
+    "color": "#CCCCCC",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFFFF",
+    "selectedColor": "#74AEEA",
     "list":[{
       "pagePath": "pages/association/association",
       "text":"关联",

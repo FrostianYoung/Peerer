@@ -1,1 +1,0 @@
-delete from sys_log where interface_code = 'sign' or interface_code = 'values';
