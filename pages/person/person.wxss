@@ -1,0 +1,58 @@
+/* pages/mine/mine.wxss */
+
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24rpx;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 200rpx;
+}
+
+.userinfo-avatar {
+  margin-left: 30rpx;
+  width: 150rpx;
+  height: 150rpx;
+  margin: 30rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  font-size: 30rpx;
+}
+.userinfo-description {
+  font-size: 24rpx;
+}
+
+.userinfo-button {
+  margin-right: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: gray;
+  border-radius: 50rpx;
+}
+.userinfo-button::after {
+  border-radius: 50rpx;
+  border: 0;
+}
+.btn-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+}
+.tabList {
+  width: 90%;
+}

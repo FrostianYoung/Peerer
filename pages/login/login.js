@@ -9,12 +9,10 @@ Page({
     show: false, //是否显示登录弹窗
     currentTime: 30,
     sending: false, //获取验证码按钮是否可用
-    loginForm: {
-      isPhoneLogin: false,
-      mobile: "",
-      code: "",
-      codeText: "获取验证码"
-    },
+    isPhoneLogin: false, //因为使用了简易双向绑定，不支持路径
+    mobile: "",
+    code: "",
+    codeText: "获取验证码"
   },
   onLoad: function (options) { //页面加载后就从本地获取登录信息
     this.getLoginStateFromStorage();
@@ -46,51 +44,63 @@ Page({
     this.codeText = codeText;
   },
   getCode(){ // 获取验证码
-    let _this = this;
-    this.mobile ? 
-      /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test(this.mobile) ? // 测试手机号格式
-      this.selectComponent('#canGetCode') ? // 组件，判断是否可以获取验证码（根据倒计时）
-        (wx.showLoading({ // 可以获取验证码
+    var this_ = this;
+    if(this.mobile != ''){
+      var myreg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
+      if(myreg.test(this.mobile) === true) { // 测试手机号格式
+      if(this.selectComponent('#canGetCode') === true ){ // 组件，判断是否可以获取验证码（根据倒计时）
+        wx.showLoading({ // 可以获取验证码
         title: "正在获取验证码",
         icon: 'none'
-      }), wx.request({ // 从后端获取验证码
-        url: 'https://peerer.cn/api/v1/uc/member/verifycode',
-        method: "POST",
-        data: {
-          module: "login",
-          type: "sms",
-          key: this.mobile
-        },
-        success: function(res) { // 获取成功，显示等待信息
-          res.data.status ? setTimeout(function() { //设置定时器
+        }), 
+        wx.request({ // 从后端获取验证码
+          url: 'https://peerer.cn/api/v1/uc/member/verifycode',
+          method: "POST",
+          data: {
+            module: "login",
+            type: "sms",
+            key: this.mobile
+          },
+          success: function(res) { // 获取成功，显示等待信息
+            if(res.data.status === true) {setTimeout(function() { //设置定时器
+              wx.hideLoading(), 
+              wx.selectComponent('#codeCountStart');
+            }, 1000) 
+            } else {
+              wx.hideLoading(), 
+              console.log(res.data.errMsg), 
+              wx.showToast({
+                title: '获取验证码错误',
+                icon: 'none'
+              })
+            }
+          },
+          fail: function(err) {
             wx.hideLoading(), 
-            wx.selectComponent('#codeCountStart');
-          }, 1000) 
-          : (wx.hideLoading(), 
-            console.log(res.data.errMsg), 
+            console.log(err), 
             wx.showToast({
               title: '获取验证码错误',
               icon: 'none'
-            }))
-        },
-        fail: function(err) {
-          wx.hideLoading(), 
-          console.log(err), 
-          wx.showToast({
-            title: '获取验证码错误',
-            icon: 'none'
-          })
-        }
-    })) : wx.showToast({ // 不能获取Code
-      title: '倒计时结束后再发送',
-      icon: 'none'
-    }) : wx.showToast({ 
-      title: '"手机号格式不正确"',
-      icon: 'none'
-    }) : wx.showToast({ // this.mobile为空 
-        title: '请输入手机号',
+            })
+          }
+        })
+      } else{
+        wx.showToast({ // 不能获取Code
+        title: '倒计时结束后再发送',
+        icon: 'none'
+        })
+      }
+    } else {
+      wx.showToast({ 
+        title: '"手机号格式不正确"',
         icon: 'none'
       })
+    }
+  } else { 
+      wx.showToast({ // this.mobile为空 
+        title: '请输入手机号',
+        icon: 'none'
+      })}
   },
   phoneLogin: function() { //根据手机号登录
     var this_ = this;
@@ -233,11 +243,20 @@ Page({
       show: false
     })
   },
-  getInputKey(e) {// 获取输入值
-    let key = e.currentTarge.dataset.name;
-    let value = e.detail.value;
+  onChange(e) {
     this.setData({
-      [key]: value
+      [e.currentTarget.dataset.value]: e.detail
+    })
+  }
+  /*
+  mobileInput(e) {// 获取输入值
+    this.setData({
+      mobile : e.detail
     })
   },
+  vfCodeInput(e) {
+    this.setData({
+      code : e.detail
+    })
+  }*/
 })

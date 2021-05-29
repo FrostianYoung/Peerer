@@ -21,7 +21,8 @@
     "components/component/home/internshipInfoEdit",
     "components/component/home/projectInfoEdit",
     "components/component/home/personalityInfoEdit",
-    "components/component/home/statementTagInfoEdit"
+    "components/component/home/statementTagInfoEdit",
+    "pages/person/person"
   ],
   "window":{
     "navigationBarBackgroundColor": "#F8F8F8",

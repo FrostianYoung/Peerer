@@ -1,2 +1,20 @@
 <!--components/component/home/eduInfo.wxml-->
-<text>components/component/home/eduInfo.wxml</text>
+<view class="item-info" wx:if="{{degree}}">
+  <view class="info-title">
+    <text class="icon" style="font-size:24px; margin-right:4px; ">icon</text>教育 EDUCATION
+  </view>
+  <view class="simple-value" wx:for="{{$root.l0}}" wx:key="index">
+    <view style="display:flex;">
+      <text bindtap="switchSN" class="top icon" wx:if="index != 0">icon</text>
+      <text class="simple-value_text" style="{{index == 0? 'margin-left: 28px' : ''}}">{{''+item.m0+''}}</text>
+    </view>
+    <view>
+      <text bindtap="toEduInfoEdit" class="edit-btn">
+        <text class="icon" style="color: rgb(204, 204, 204); font-size: 14px;">icon</text>
+      </text>
+    </view>
+  </view>
+  <view bindtap="toEduInfoEdit" class="add_btn">
+    <text class="icon" style="color: rgb(204, 204, 204); font-size: 14px; margin-right: 4px;">icon</text>添加教育信息
+  </view>
+</view>
