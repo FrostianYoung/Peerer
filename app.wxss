@@ -1,41 +1,9 @@
 /**app.wxss**/
-@import "./icon_peer.wxss";
-@font-face {
-  font-family: cloudok-icon;
-  src: url("//at.alicdn.com/t/font_2354786_ddnj1ahivr.js") 
-  format("woff2"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.woff?t=1620109782871") format("woff"),url("//at.alicdn.com/t/font_2354786_zc36h7xry2.ttf?t=1620109782871") format("truetype");
-}
-/*
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} 
-*/
+@import "./style/iconfont.wxss";
 
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 24rpx;
-}
-.logo_nav {
-  height: 150rpx;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  background-color: white;
-}
+
 .icon {
   text-align: center;
-  font-family: cloudok-icon;
 }
 
 image {
@@ -45,6 +13,7 @@ image {
 [bind-data-custom-hidden="true"],[data-custom-hidden="true"] {
   display: none!important;
 }
+
 .scrollPage {
   height: 100vh;
 }

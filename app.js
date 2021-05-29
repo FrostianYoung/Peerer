@@ -3,11 +3,6 @@ const app=getApp()
 
 App({
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     var this_=this
     // 登录
     wx.login({
@@ -17,19 +12,25 @@ App({
           wx.request({
             url: this_.globalData.url+'/v1/minapp/user/code2session',
             data: {
-              code: res.code
+              'code': res.code
             },
             method: 'POST',
             header: {
-              'content-type': 'application/x-www-form-urlencoded'
+              'content-type': 'application/json'
             },
-            success(res) {
-              console.log(res)
-            }
+            success: function (res) {
+              //console.log(res)
+              if (res.status == 1) {
+                wx.setStorage('phone', res.phone);
+              }
+            },
           })
         } else {
           console.log('获取用户登录态失败' + res.errMsg);
         }
+      },
+      fail: function (err) {
+        console.log(err);
       }
     })
   },

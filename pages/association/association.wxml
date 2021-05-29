@@ -1,2 +1,5 @@
 <!--pages/association/association.wxml-->
-<text>pages/association/association.wxml</text>
+<view class="associationPage">
+  <text>尝试输出t-icon\n</text>
+  <view class="t-icon cloudokmd-https"></view>
+</view>

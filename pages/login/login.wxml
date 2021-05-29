@@ -4,19 +4,21 @@
     <image src="/images/logo.png" style="box-shadow: none;"></image>
   </view>
   <view class="content">
-    <view class="introTab" style="padding: 6px;">
+    <view style="padding: 6px;">
       <view class="intro">Hi 🎐 欢迎来到Peer！</view>
       <view class="intro">Peer是云端的大学生社交圈</view>
       <view class="intro">
         <text style="margin-right: 4px;">在这里</text>
         <text>你能关联</text>
-        <text class="tag">专业研究</text>
       </view>
       <view class="intro">
-        <text class="tag">实习经历</text>
-        <text class="tag">日常爱好</text>
-        <text class="tag">未来规划</text>
-        <text style="margin-left: 4px;">相关的Peers</text>
+        <text class="tag" color="#6fa9e3">专业研究</text>
+        <text class="tag" color="#6fa9e3">实习经历</text>
+      </view>
+      <view>
+        <text class="tag" color="#6fa9e3">日常爱好</text>
+        <text class="tag" color="#6fa9e3">未来规划</text>
+        <text style="margin-left:4px;">相关的Peers</text>
       </view>
       <view class="intro">
         <text style="background-color: transparent;">欢迎成为种子用户\n</text>
@@ -25,7 +27,20 @@
     </view>
   </view>
   <view class="loginBtn" wx:if="{{!isPhoneLogin}}">
-    <button bindgetphonenumber="getPhoneNumber" open-type="getPhoneNumber" class="wx_phone" >微信登录</button>
-    <button bindtap="loginPages" class="phone" data-event-opts="{{[ ['tap', [ [ 'e0', ['$event']]]]]}}">手机号登录</button>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信登录</button>
+    <button bindtap="showLogin">手机号登录</button>
   </view>
+  <van-popup class="dialog" show="{{ show }}" closeable 
+    round position="bottom" custom-style="height: 50%" 
+    bind:close="onClose">
+    <van-field value="{{ phone }}" label="手机号" placeholder="请填写手机号" 
+      border="{{ false }}" use-button-slot>
+      <van-button slot="button" size="small" type="primary" bindtap="getCode">{{ loginForm.codeText }}</van-button>
+    </van-field>
+    <van-field value="{{ code }}" label="验证码" placeholder="请填写验证码"
+    border="{{ false }}"></van-field>
+    <button class="loginPeer" bindtap="phoneLogin">登录Peer→</button>
+  </van-popup>
+  
+  
 </view>
