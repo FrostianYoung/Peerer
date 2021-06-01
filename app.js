@@ -15,13 +15,10 @@ App({
               'code': res.code
             },
             method: 'POST',
-            header: {
-              'content-type': 'application/json'
-            },
             success: function (res) {
               //console.log(res)
-              if (res.status == 1) {
-                wx.setStorage('phone', res.phone);
+              if (res.data.status == 1) {
+                wx.setStorage('mobile', res.phone);
               }
             },
           })

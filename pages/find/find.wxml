@@ -1,4 +1,60 @@
 <!--pages/find/find.wxml-->
-<cu-custom class="logo_nav" bgColor="bg-white">
-  <image src="../../images/logo_mini.png" style="width:59.8px;height:26px;box-shadow:none;"></image>
-</cu-custom>
+<view class="findPage">
+  <view class="navBar">
+    <navigation-bar bind:refresh="_e" ></navigation-bar>
+  </view>
+	<view class="find_content" style="{{'padding-top:'+statusBarHeight+';'}}">
+		<view style="" wx:if="{{tagList}}">
+			<view style="box-sizing:border-box; width:100%;display: flex;align-items: center; justify-content:flex=start;margin-bottom: 8px;">
+				<view bindtap="refresh" style="margin-right:8px;width:24px;eight: 24px;line-height:20px;border-radius:16px;background-color:rgba(230,242,255,100); color:rgba(102,102,102,100);font-size:14px;box-shadow:0px 2px 6px 0px rgba(0,0,0,0.1);display: flex;align-items:center;justify-content:center;">
+					<text class="icon" style="color: #96c8fa; font-size:20px;">icon</text>
+				</view> 
+				<view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n0'] ] ] ] ]}}" style="margin-right:8px;height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[0]}}">
+                    <text  style="color:#666666;">{{''+tagList[0].topicName+''}}</text>
+                </view>
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n1'] ] ] ] ]}}" style="margin-right:8px;height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[1]}}">
+                    <text  style="color:#666666;">{{''+tagList[1].topicName+''}}</text>
+                </view>
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n2'] ] ] ] ]}}" style="height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[2]}}">
+                    <text  style="color:#666666;margin-right:4px;">{{''+tagList[2].topicIcon+''}}</text>
+                    <text  style="color:#666666;">{{''+tagList[2].topicName+''}}</text>
+                </view>
+			</view>
+			<view style="box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:flex-end;margin-top:8px;">
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n3'] ] ] ] ]}}" style="height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[3]}}">
+                    <text  style="color:#666666;margin-right:4px;">{{''+tagList[3].topicIcon+''}}</text>
+                    <text  style="color:#666666;">{{''+tagList[3].topicName+''}}</text>
+                </view>
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n4'] ] ] ] ]}}" style="margin-left:8px;height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[4]}}">
+                    <text  style="color:#666666;margin-right:4px;">{{''+tagList[4].topicIcon+''}}</text>
+                    <text  style="color:#666666;">{{''+tagList[4].topicName+''}}</text>
+                </view>
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['$0'],['tagList.__$n5'] ] ] ] ]}}" style="margin-left:8px;height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;text-align:center;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);padding:0px 8px;display:flex;align-items:center;justify-content:center;min-width:66px;" wx:if="{{tagList[5]}}">
+                    <text  style="color:#666666;margin-right:4px;">{{''+tagList[5].topicIcon+''}}</text>
+                    <text  style="color:#666666;">{{''+tagList[5].topicName+''}}</text>
+                </view>
+                <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'e0',['$event'] ] ] ] ]}}" style="margin-left:8px;width:24px;height:24px;line-height:20px;border-radius:16px;background-color:rgba(230, 242, 255, 100);color:rgba(102, 102, 102, 100);font-size:14px;box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;">
+                    <text class="icon" style="color:#96c8fa;font-size:18px;"></text>
+                </view>
+            </view>
+		</view>
+		<view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ ['publish'] ] ] ]}}" style="width:200px;background-color:rgb(255, 255, 255);border:none;box-shadow:rgb(0 0 0 / 10%) 0px 2px 6px 0px;border-radius:16px;text-align:center;line-height:32px;font-weight:normal;font-style:normal;margin-top:16px;">
+            <text class="icon" style="color:#74aeea;font-size:16px;margin-right:4px;"></text>
+            <text  style="color:#74aeea;font-size:14px;">发布动态</text>
+        </view>
+        <view class="warp">
+            <friend-zone-card bind:__l="__l" bind:refreshData="__e"  data-event-opts="{{[ [ '^refreshData',[ ['refresh'] ] ] ]}}" degree="{{degree}}" experience="{{experience}}" industry="{{industry}}" item="{{item}}" style="width:100%;" vueId="{{'0ad20e80-2-'+index}}" wx:for="{{page.data}}" wx:key="index"></friend-zone-card>
+            <u-loadmore bind:__l="__l"  status="{{status}}" style="margin-top:32px;" vueId="0ad20e80-3"></u-loadmore>
+        </view>
+	</view>
+	<u-popup bind:__l="__l" bind:input="__e" borderRadius="40"  data-event-opts="{{[ [ '^input',[ [ '__set_model',[ '','showTagPopup','$event',[] ] ] ] ] ]}}" height="202px" mode="center" value="{{showTagPopup}}" vueId="0ad20e80-4" vueSlots="{{['default']}}" width="338px">
+        <view  style="padding:16px;width:306px;height:170px;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+            <text  style="margin:16px 0px;coloc:#101010;">👀 推荐标签将根据个人主页的信息显示
+        完善主页获得更准确的推荐标签 🏷️</text>
+            <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toPersonal',['$event'] ] ] ] ]}}" style="margin:16px 0px;width:164px;height:36px;line-height:20px;border-radius:20px;background-color:rgba(150, 200, 250, 100);color:rgba(16, 16, 16, 100);font-size:14px;display:flex;align-items:center;justify-content:center;">
+                <text class="icon" style="margin-right:4px;color:white;"></text>
+                <text  style="color:white;">去完善</text>
+            </view>
+        </view>
+    </u-popup>
+</view>

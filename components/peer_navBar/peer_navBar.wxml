@@ -1,5 +1,0 @@
-<!--components/peer_navBar/peer_navBar.wxml-->
-<view bindtap="refresh">
-  <status-bar></status-bar>
-  <image src="/images/logo_mini.png" style="width: 59.8px; heiget:26px; box-shadow:none;"></image>
-</view>

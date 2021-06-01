@@ -34,10 +34,10 @@
     round position="bottom" custom-style="height: 50%" 
     bind:close="onClose">
     <view class="loginPopup">
-      <van-field value="{{ mobile }}" 
+      <van-field 
         focus
-        bind:change="onChange"
-        data-value="mobile" type="number"
+        bind:input='getMobileInput'
+        type="number"
         center clearable 
         label="手机号" placeholder="请填写手机号" 
         border="{{ false }}" use-button-slot>
@@ -53,11 +53,15 @@
       <van-field model:value="{{ code }}" 
       focus
       center clearable 
-      bind:change="onChange"
+      bind:input="getInputCode"
       data-value="code" type="number"
       label="验证码" placeholder="请填写验证码"
       border="{{ false }}"></van-field>
-      <button class="loginPeer" bindtap="phoneLogin">登录Peer→</button>
+      <button class="loginPeer" bindtap="phoneLogin">
+        <text style="margin-right:4px;">登录</text>
+        <text style="font-weight:bold;">Peer</text>
+        <text class="icon" style="margin-left:8px">→</text>
+      </button>
     </view>
   </van-popup>
   

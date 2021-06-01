@@ -1,65 +1,141 @@
-// pages/association/association.js
+// pages/association.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 70 + "px",
+    userAvatar: "/images/logo.png",
+    userInfo: {},
+    simpleInfo: {},
+    degree: void 0,
+    experience: void 0,
+    industry: void 0,
+    links: {
+      suggestList: [],
+      suggested: 0,
+      currentSuggestCount: 0,
+      successTimes: 0,
+      realSuccessTimes: 0,
+      todayRecognizedList: [],
+      todaySuggestList: [],
+    },
+    filterType: 0,
+    userId: "",
+    circleType: "",
+    circleValue: "",
+    businessId: "",
+    defaultAvatar: "/images/v2_qn75yc.jpg",
+    showUserCardDialog: false,
+    choiceUser: {},
+    suggest: {
+      pageNo: 1,
+      pageSize: 10,
+      totalCount: 0,
+      suggestList: []
+    },
+    status: "loadmore",
+    timestamp: "",
+    showTagPopup: false,
+    tagList: [],
+    showFloatingButton: false,
+    isPhoneLogin: false,
+    mobile: "",
+    code: "",
+    codeText: "获取验证码",
+    showTipsDialog: false,
+    showWechatLodin: true,
+    showWechatLoginDialog: false
+  },
+  setBaseInfo: function() {
 
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  setTimeSeed: function() {
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  getTimeSeed: function() {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  getDegree: function() {
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+  getExperience: function() {
 
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+  getIndustry: function() {
 
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+  getSimpleInfo: function() {
 
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
+  toFriend: function() {
 
   },
+  toUserInfo: function(res) {
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  },
+  onClickDropDown: function(res) {
+
+  },
+  toMessage: function() {
+
+  },
+  loadData: function() {
+
+  },
+  loadNextPage: function() {
+
+  },
+  ke: function(res) {
+
+  },
+  ked: function() {
+
+  },
+  refresh: function() {
+
+  },
+  toPersonal: function() {
+
+  },
+  getTag: function() {
+
+  },
+  toCircle: function() {
+
+  },
+  codeChange: function(res) {
+
+  },
+  getCode: function() {
+
+  },
+  phoneLogin: function() {
+
+  },
+  isLogin: function() {
+
+  },
+  click_isLogin: function() {
+
+  },
+  click_showTagPopup: function() {
+
+  },
+  getPhoneNumber: function(res) {
+
+  },
+  getWeChatUserInfo: function(res) {
+
+  },
+  getEducationalListInfo: function(res) {
+
+  },
+  initLogin: function(res) {
+
+  },
+  getMessageNumber: function() {
 
   }
 })

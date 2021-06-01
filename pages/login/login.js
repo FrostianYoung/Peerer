@@ -1,5 +1,6 @@
 // pages/login/login.js
-const app=getApp()
+const app=getApp();
+
 Page({
 
   /**
@@ -7,8 +8,8 @@ Page({
    */
   data: {
     show: false, //是否显示登录弹窗
-    currentTime: 30,
-    sending: false, //获取验证码按钮是否可用
+    currentTime: 3,
+    canGetCode: true, //获取验证码按钮是否可用
     isPhoneLogin: false, //因为使用了简易双向绑定，不支持路径
     mobile: "",
     code: "",
@@ -37,97 +38,200 @@ Page({
       }
     })
   },
-  openPhoneLogin: function () { // 手机号登录
-    this.isPhoneLogin = true;
+  getMobileInput: function (e) { // 获取手机号的输入
+    var this_ = this;
+    var mobileInput = e.detail;
+    this_.setData({
+      mobile: mobileInput
+    })
+    //console.log(this_.data.mobile);
   },
-  codeChange: function (codeText) { // 修改验证码按钮对应内容，用来显示倒计时和重新发送验证码
-    this.codeText = codeText;
+  openPhoneLogin: function () { // 手机号登录
+    this.data.isPhoneLogin = true;
   },
   getCode(){ // 获取验证码
     var this_ = this;
-    if(this.mobile != ''){
-      var myreg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
-      if(myreg.test(this.mobile) === true) { // 测试手机号格式
-      if(this.selectComponent('#canGetCode') === true ){ // 组件，判断是否可以获取验证码（根据倒计时）
-        wx.showLoading({ // 可以获取验证码
-        title: "正在获取验证码",
+    var phone = this_.data.mobile;
+    console.log(this_.data.mobile);
+    var myreg =  /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
+    if(phone == '') {
+      wx.showToast({
+        title: '请输入手机号',
+        icon: 'none',
+      })
+      return false;
+    } else if(phone.length != 11 ){
+      wx.showToast({
+        title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return false;
+    } else if(!myreg.test(phone)) {
+      wx.showToast({
+        title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return false;
+    } else if(!this_.data.canGetCode) {
+      wx.showToast({ // 不能获取Code
+        title: '倒计时结束后再发送',
         icon: 'none'
-        }), 
-        wx.request({ // 从后端获取验证码
-          url: 'https://peerer.cn/api/v1/uc/member/verifycode',
-          method: "POST",
-          data: {
-            module: "login",
-            type: "sms",
-            key: this.mobile
-          },
-          success: function(res) { // 获取成功，显示等待信息
-            if(res.data.status === true) {setTimeout(function() { //设置定时器
-              wx.hideLoading(), 
-              wx.selectComponent('#codeCountStart');
-            }, 1000) 
-            } else {
-              wx.hideLoading(), 
-              console.log(res.data.errMsg), 
-              wx.showToast({
-                title: '获取验证码错误',
-                icon: 'none'
-              })
-            }
-          },
-          fail: function(err) {
-            wx.hideLoading(), 
-            console.log(err), 
+      })
+      return false;
+    } else {
+      wx.showLoading({
+        title: '正在获取验证码',
+        icon: 'none'
+      }),
+      wx.request({
+        url: 'https://peerer.cn/api/v1/uc/member/verifycode',
+        method: 'POST',
+        data: {
+          module: "login",
+          type: "sms",
+          key: this.data.mobile
+        },
+        success (res) {
+          if(res.data.status) {
+            wx.hideLoading()
+          } else {
+            wx.hideLoading(),
+            console.log(res.data.errMsg),
             wx.showToast({
               title: '获取验证码错误',
               icon: 'none'
             })
           }
-        })
-      } else{
-        wx.showToast({ // 不能获取Code
-        title: '倒计时结束后再发送',
-        icon: 'none'
-        })
-      }
-    } else {
-      wx.showToast({ 
-        title: '"手机号格式不正确"',
-        icon: 'none'
+        },
+        fail (err) {
+          wx.hideLoading(), 
+          console.log(err), 
+          wx.showToast({
+            title: '获取验证码错误',
+            icon: 'none'
+          })
+        }
       })
+      this_.setData({canGetCode: true})
+      var currentTime = this_.data.currentTime;
+      var interval = setInterval(function() {
+        currentTime--;
+        this_.setData({
+          codeText: currentTime + '秒'
+        })
+        if(currentTime <= 0) {
+          clearInterval(interval);
+          this_.setData({
+            currentTime: 3,
+            canGetCode: false,
+            codeText: '重新获取'
+          })
+        }
+      }, 1000)
     }
-  } else { 
-      wx.showToast({ // this.mobile为空 
-        title: '请输入手机号',
-        icon: 'none'
-      })}
-  },
+  },  
   phoneLogin: function() { //根据手机号登录
     var this_ = this;
-    this.mobile && this.code ? // 手机号和验证码非空
-    wx.request({ // 后端登录
-      url: 'https://peerer.cn/api/v1/uc/member/login',
-      method: "POST",
-      data: {
-        loginType: "0",
-        userName: this.mobile,
-        code: this.code
-      },
-      success: function(res) { // res中是服务器返回的内容，没有找到这个API，格式暂不明
-        if(res.data.status) {
+    if(this_.data.mobile == '' || this_.data.code == '') {
+      wx.showToast({
+        title: '请输入手机号与验证码',
+        icon: 'none'
+      })
+    } else {
+      wx.request({
+        url: 'https://peerer.cn/api/v1/uc/member/login',
+        method: 'POST',
+        data: {
+          loginType: "0",
+          userName: this.data.mobile,
+          code: this.data.code
+        },
+        success (res) {
+          if(res.data.status) {
+            wx.showToast({
+              title: '登陆成功',
+              icon: 'none'
+            })
+            var token = {};
+            token.accessToken = res.data.result.accessToken,
+            token.refreshToken = res.data.refreshToken,
+            wx.setStorage({
+              key: "token",
+              data: token,
+              success () {
+                wx.switchTab({
+                  url: '/pages/mine/mine',
+                  success () {
+                    console.log('success');
+                  },
+                  fail (err) {
+                    console.log(err);
+                  }
+                })
+              }
+            })
+          } else {
+            wx.hideLoading(),
+            console.log(res.data.error),
+            wx.showToast({
+              title: '登录失败，请重试'+res.data.error.errorMessage,
+              icon: 'none'
+            })
+          }
+        },
+        fail (err) {
+          wx.hideLoading(), 
+          console.log(err), 
           wx.showToast({
-            title: '登陆成功',
+            title: '登录失败，请重试',
             icon: 'none',
-          })
-          var token = {};
-          token.accessToken = res.data.result.accessToken,
-          token.refreshToken = res.data.refreshToken,
-          wx.setStorage({ // 存储用户信息到本地
-            key: "token",
-            data: token,
-            success: function() {
-              wx.switchTab({ // 切换界面
-                url: '/pages/find/find',
+          });
+        }
+      });
+    }
+  },
+  getPhoneNumber: function (res) { // 获取微信绑定手机号
+    console.log(res),
+    wx.login({
+      provider: "weixin",
+      success: function(t) {
+        console.log("登录", t.code), wx.getUserInfo({
+          provider: "weixin",
+          success: function(e) {
+            console.log(e);
+          }
+        });
+      }
+    });
+  },
+  showLogin() { // 展示login弹窗
+    this.setData({
+      show: true
+    })
+  },
+  onClose() { // 关闭login弹窗
+    this.setData({
+      show: false
+    })
+  },
+  onChange(e) { // ?
+    this.setData({
+      [e.currentTarget.dataset.value]: e.detail
+    })
+  }
+  /*
+  mobileInput(e) {// 获取输入值
+    this.setData({
+      mobile : e.detail
+    })
+  },
+  vfCodeInput(e) {
+    this.setData({
+      code : e.detail
+    })
+  }*/
+})
+/*
                 success: function() { //以下内容暂未修改完成
                   var t = r(s.default.mark(function t(o) {
                     return s.default.wrap(function (t) {
@@ -197,66 +301,6 @@ Page({
               });
             }
           })
-        } else { // status = false, 登陆失败
-          wx.hideLoading(), 
-          console.log(res.data.error), 
-          wx.showToast({
-            title: '登录失败，请重试' + res.data.error.errorMessage,
-            icon: 'none',
-          })
         }
       },
-      fail: function(err) {
-        wx.hideLoading(), 
-        console.log(err), 
-        wx.showToast({
-          title: '登录失败，请重试',
-          icon: 'none',
-        })
-      }
-    }) : wx.showToast({ // 手机号与验证码有空的
-          title: '请输入手机号与验证码',
-          icon: 'none',
-        })
-  },
-  getPhoneNumber: function (res) { // 获取微信绑定手机号
-    console.log(res),
-    wx.login({
-      provider: "weixin",
-      success: function(t) {
-        console.log("登录", t.code), wx.getUserInfo({
-          provider: "weixin",
-          success: function(e) {
-            console.log(e);
-          }
-        });
-      }
-    });
-  },
-  showLogin() { // 展示login弹窗
-    this.setData({
-      show: true
-    })
-  },
-  onClose() { // 关闭login弹窗
-    this.setData({
-      show: false
-    })
-  },
-  onChange(e) {
-    this.setData({
-      [e.currentTarget.dataset.value]: e.detail
-    })
-  }
-  /*
-  mobileInput(e) {// 获取输入值
-    this.setData({
-      mobile : e.detail
-    })
-  },
-  vfCodeInput(e) {
-    this.setData({
-      code : e.detail
-    })
-  }*/
-})
+      */

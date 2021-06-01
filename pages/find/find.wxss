@@ -1,1 +1,14 @@
 /* pages/find/find.wxss */
+
+.findPage {
+  padding: 16px;
+  height: calc(100vh -24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-box-pack: start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}

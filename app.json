@@ -1,9 +1,8 @@
 {
-  "pages":[
+  "pages": [
+    "pages/mine/mine",
     "pages/login/login",
     "pages/association/association",
-    
-    "pages/mine/mine",
     "components/component/friend",
     "components/component/peerCircle",
     "components/component/userInfo",
@@ -21,16 +20,15 @@
     "components/component/home/internshipInfoEdit",
     "components/component/home/projectInfoEdit",
     "components/component/home/personalityInfoEdit",
-    "components/component/home/statementTagInfoEdit",
-    "pages/person/person"
+    "components/component/home/statementTagInfoEdit"
   ],
-  "window":{
+  "window": {
     "navigationBarBackgroundColor": "#F8F8F8",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black",
+    "navigationBarTextStyle": "black",
     "navigationStyle": "custom",
     "backgroundColor": "#F8F8F8",
-    "backgroundTextStyle":"light"
+    "backgroundTextStyle": "light"
   },
   "usingComponents": {
     "van-action-sheet": "./dist/action-sheet/index",
@@ -103,27 +101,32 @@
     "borderStyle": "black",
     "backgroundColor": "#FFFFFF",
     "selectedColor": "#74AEEA",
-    "list":[{
-      "pagePath": "pages/association/association",
-      "text":"关联",
-      "iconPath": "images/icons/icon_association.png",
-      "selectedIconPath": "images/icons/icon_association_HL.png"
-    }, {
-      "pagePath": "pages/find/find",
-      "text":"发现",
-      "iconPath": "images/icons/icon_find.png",
-      "selectedIconPath": "images/icons/icon_find_HL.png"
-    }, {
-      "pagePath": "pages/message/message",
-      "text":"消息",
-      "iconPath": "images/icons/icon_message.png",
-      "selectedIconPath": "images/icons/icon_message_HL.png"
-    }, {
-      "pagePath": "pages/mine/mine",
-      "text":"我的",
-      "iconPath": "images/icons/icon_mine.png",
-      "selectedIconPath": "images/icons/icon_mine_HL.png"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/association/association",
+        "text": "关联",
+        "iconPath": "images/icons/icon_association.png",
+        "selectedIconPath": "images/icons/icon_association_HL.png"
+      },
+      {
+        "pagePath": "pages/find/find",
+        "text": "发现",
+        "iconPath": "images/icons/icon_find.png",
+        "selectedIconPath": "images/icons/icon_find_HL.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "images/icons/icon_message.png",
+        "selectedIconPath": "images/icons/icon_message_HL.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/icons/icon_mine.png",
+        "selectedIconPath": "images/icons/icon_mine_HL.png"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

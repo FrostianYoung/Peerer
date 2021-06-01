@@ -2,13 +2,5 @@
   "navigationStyle": "custom",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "navigation-bar": "/components/peer_navBar/peer_navBar",
-    "my-friend-zone": "/components/component/myFriendZone",
-    "edu-info": "/components/component/home/eduInfo",
-    "research-info": "/components/component/home/researchInfo",
-    "internship": "/components/component/home/intershipInfo",
-    "project-info": "/components/component/home/projectInfo",
-    "personality-tag-info": "/components/component/home/personalityTagInfo",
-    "statament-tag-info": "/components/component/home/statementTagInfo"
   }
 }

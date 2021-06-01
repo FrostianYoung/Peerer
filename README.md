@@ -3,6 +3,7 @@
 
 ## 编码提示
 使用icon: class="t-icon iconname"， iconname从下载iconfont压缩包解压后得到的demo_index.html网页获取
+<view class="t-icon cloudokmd-https"></view>
 自定义弹窗组件：仅实现
 
 ## 功能

@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    statusBarHeight : 70+"px",
+    statusBarHeight : wx.getSystemInfoSync().statusBarHeight + 70 + 'px',
     defaultAvatar: "/images/v2_qn75yc.jpg",
     userId: "",
     userInfo: {},

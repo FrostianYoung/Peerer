@@ -1,4 +1,81 @@
 <!--pages/message/message.wxml-->
+<view class="messagePage">
+  <view class="navBar">
+    <navigation-bar bind:refresh="refresh"></navigation-bar>
+  </view>
+  <view class="message_content">
+    <view bindtap="friendZoneNewReply" class="notification">
+      <view style="">
+        <view style="">
+          <text class="icon" style="">icon</text>
+        </view>
+        <view class="message_comment">
+          <text class="message_title">评论</text>
+          <text class="message_number" ></text>
+        </view>
+      </view>
+      <view class="">
+        <view class="{{['', index>0? 'image-group':'']}}" wx:for="{{$root.l0}}" wx:key="index">
+          <image class="comment_image" src="{{item.avatarUrl?item.avatarUrl:defaultAvatar}}"></image>
+        </view> 
+      </view>
+    </view>
+    <view bindtap="friendZoneNewReply" class="notification">
+      <view class="message_content">
+        <view>
+          <text class="icon">icon</text>
+        </view>
+        <text>点赞</text>
+        <text class="message_number"></text>
+      </view>
+      <view>
+        <view class="{{['',index>0?'image-group':'']}}" wx:for="{{}}" wx:key="index">
+          <image src="{{item.avatarUrl?item.avatarUrl:defaultAvatar}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class="">
+      <view bindtap="toNewWork" class="empty_title">
+        <text class="icon">icon</text>互可后会有私信箱
+      </view>
+    </view>
+    <view bindtap="toMessageDetail" class="leav-message" wx:for="{{}}" wx:key="index">
+      <view class="user-info">
+        <view class="item_img">
+          <image bind:click="click" src=""></image>
+          <view class="message_tag" wx:if="{{item.m0}}">{{item.m1}}</view>
+        </view>
+        <view class="item_content">
+          <view>
+            <text>{{item[$orig].user.nickName}}</text>
+            <text>{{''+item.m2}}</text>
+          </view>
+          <view wx:if="{{item[$orig].user.educationList[0]}}">
+            <text  style="margin-right:4px;">{{item[$orig].user.educationList[0].school.name+' ·'}}</text>
+            <text  style="margin-right:4px;">{{item[$orig].user.educationList[0].specialism.name+' ·'}}</text>
+            <text >{{''+item.m3+''}}</text>
+            <text >{{item.m4+''}}</text>
+          </view>
+          <view wx:else></view>
+        </view>
+      </view>
+      <view class="message">
+        <view class="{{['',subItem.memberId!=userInfo.id||subItem.type=='1'? 'to-message':'my-message']}}" wx:for="item[$orig].latestMessageList}}" wx:for-item="subItem" wx:key="index">
+          <view>
+            <block wx:if="{{item[$orig].identicals&&index==0&&item[$orig].latestMessageList[0].type=='1'}}">
+              <view wx:if="{{item[$orig].identicals}}" wx:for-index="index1" wx:for-item="text" wx:key="index1">{{''+text+''}}</view>
+            </block>
+            <text>{{subItem.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <loadmore bind:click="click" status="{{status}}"></loadmore>
+  </view>
+</view>
+
+
+
 <cu-custom class="logo_nav" bgColor="bg-white">
   <image src="../../images/logo_mini.png" style="width:59.8px;height:26px;box-shadow:none;"></image>
 </cu-custom>

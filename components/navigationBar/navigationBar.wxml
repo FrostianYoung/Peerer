@@ -1,0 +1,4 @@
+<!--components/navigationBar/navigationBar.wxml-->
+<view class="navBar" bindtap="onRefresh">
+  <image class="logo_mini" src="/images/logo_mini.png"></image>
+</view>

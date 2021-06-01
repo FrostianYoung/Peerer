@@ -18,8 +18,8 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    refresh: function() {
-      this.$emit("refresh");
+    onRefresh: function() {
+      this.onReady();
     }
   }
 })

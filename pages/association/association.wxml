@@ -1,5 +1,127 @@
-<!--pages/association/association.wxml-->
+<!--pages/association.wxml-->
 <view class="associationPage">
-  <text>尝试输出t-icon\n</text>
-  <view class="t-icon cloudokmd-https"></view>
+    <view class="navBar">
+        <navigation-bar bind:refresh="onRefresh"></navigation-bar>
+        <view bindtap="onRefresh" wx:if="{{showFloatingButton}}">
+            <text class="icon">icon</text>
+        </view> 
+    </view>
+    <view class="association_content">
+        <view class="top_card">
+            <view bindtap="toFriend0" class="top_card_item">
+                <image bind:click="?" src="{{avatar}}"></image>
+                <text class="top_card_text">你可的</text>
+                <text class="top_card_num">{{''+(simpleInfo.toCount? simpleInfo.toCount: 0)}}</text>
+            </view>
+            <view style="height:26px;border-right:1px solid #ececec;"></view>
+            <view bindtap="toFriend1" class="top_card_item">
+                <text class="top_card_text">互可</text>
+                <text class="top_card_num">{{''+(simpleInfo.friendCount? simpleInfo.friendCount: 0)}}</text>
+            </view>
+            <view style="height:26px;border-right:1px solid #ececec;"></view>
+            <view bindtap="toFriend2" class="top_card_item">
+                <text class="top_card_text">可了你</text>
+                <text class="top_card_num">{{''+(simpleInfo.fromCount? simpleInfo.fromCount: 0)}}</text>
+            </view>
+        </view>
+        <view class="login">
+            <view class="login_content">
+                <text>☁️</text>
+                <text>大学生云上社交圈</text>
+                <text>志同道合的同龄人 👥</text>
+            </view>
+        </view>
+        <button class="loginBtn" bindgetphonenumber="getPhoneNumber" open-type="getPhoneNumber">
+            <text style="margin-right:4px;">登录</text>
+            <text style="font-weight:bold;">Peer</text>
+            <text class="icon" style="margin-left:8px">→</text>
+        </button>
+    </view>
+    <view bindtap="toFriend3" class="new_ke_card" wx:if="">
+        <view class="new_ke_card_image">
+            <view class="{{['',index>0?'image-group':'']}}" wx:for="{{}}" wx:key="index">
+                <image bind:click="_l" height="28px" shape="circle" src=""></image>
+            </view>
+        </view>
+        <view class="newFrom">
+            <text class="newFrom_text">{{simpleInfo.newFrom}}</text>人觉得你很可
+        </view>
+    </view>
+    <view bindtap="click_isLogin" wx:if="{{tagList}}">
+        <view class="login_form">
+            <view bindtap="refresh">
+                <text class="icon">icon</text>
+            </view>
+            <view bindtap="toCircle">
+                <text>{{''+tagList[0].topicName+''}}</text>
+            </view>
+            <view bindtap="toCircle">
+                <text>{{''+tagList[1].topicName+''}}</text>
+            </view>
+            <view bindtap="toCircle">
+                <text>{{''+tagList[2].topicName+''}}</text>
+            </view>
+        </view>
+        <view class="otherTag">
+            <view bindtap="toCircle">
+                <text>{{''+tagList[3].topicName+''}}</text>
+            </view>
+            <view bindtap="toCircle">
+                <text>{{''+tagList[4].topicName+''}}</text>
+            </view>
+            <view bindtap="toCircle">
+                <text>{{''+tagList[5].topicName+''}}</text>
+            </view>
+            <view bindtap="click_showTagPopUp">
+                <text class="icon">icon</text>
+            </view>
+        </view>
+    </view> 
+    <view bindtap="click_isLogin">
+        <view class="user_card_list">
+            <user-card bind:ke="_e" bind:ked="_e" bind:toCircle="toCircle" bind:toUserInfo="toUserInfo" degree="{{degree}}" experience="{{experience}}" industry="{{industry}}" item="{{item}}" userInfo="{{userInfo}}" wx:for="{{suggest.suggestList}}" wx:key="index"></user-card>
+            <u-loadmore bind:click="_l" status="{{status}}"></u-loadmore>
+        </view>
+    </view>
+    <van-popup bind:input="showTagPopup" round>
+        <view class="popup_content">
+            <text>👀 推荐标签将根据个人主页的信息显示
+        完善主页获得更准确的推荐标签 🏷️</text>
+            <view bindtap="toPersonal">
+                <text class="icon">icon</text>
+                <text>去完善</text>
+            </view>
+        </view>
+    </van-popup>
+    <van-popup bind:input="showTipsDialog" value="{{showTipsDialog}}" round>
+        <view class="tips_content">
+            <text>📃 请先完善你的名片</text>
+            <text>访问Ta的主页才比较礼貌哦 👀</text>
+            <view bindtap="toPersonal">
+                <text class="icon">icon</text>
+                <text>去填写</text>
+            </view>
+        </view>
+    </van-popup>
+    <van-popup bind:input="showWechatLoginDialog">
+        <view class="login_dialog">
+            <view class="logo">
+                <image src="/images/logo.png" style="box-shadow:none;"></image>
+            </view>
+            <view class="content">
+                
+            </view>
+            <button bindgetphonenumber="getPhoneNumber" class="dialog_content_button" open-type="getPhoneNumber">
+                <text style="margin-right:4px;">登录</text>
+                <text style="font-weight:bold;">Peer</text>
+                <text class="icon" style="margin-left:8px">→</text>
+            </button>
+        </view>
+    </van-popup>
+    <van-popup bind:input="isPhoneLogin">
+        <view class="dialog_content">
+            <view class="dislog_content_inner">
+            </view>
+        </view>
+    </van-popup>
 </view>

@@ -1,20 +1,20 @@
 <!--pages/mine/mine.wxml-->
 <view>
   <view class="navBar">
-    <navigation-bar bind: a="a" bind:refresh="_e"></navigation-bar>
+    <navigation-bar bind:refresh="refresh"></navigation-bar>
   </view>
-  <view class="network_content" style="{{'padding-top:'+statusBarHeight+';"}}>
+  <view class="network_content" >
     <view class="base-info">
       <image bind:_l="_l" bind:click="_e" heiget="80px" shape="circle" 
-      src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}"></image>
+      src=""></image>
       <view class="base-info_content">
         <view class="base-info_content_text">
           <view class="user-name">{{(userInfo.nickName?userInfo.nickName:'Peer')+''}}
             <text class="icon" style="color: rgb(119, 119, 119); margin-left: 4px;" wx:if="{{userInfo.sex=='0'}}">icon</text>
             <text class="icon" style="color: rgb(119, 119, 119); margin-left: 4px;" wx:if="{{userInfo.sex=='1'}}">icon</text>
           </view>
-          <text class="user-remark" wx:if="{{userInfo.remark}}">{{userInfo.remark</text>
-          <text class="user-remark" wx:if="{{userInfo.educationList&&!userInfo.remark}}">{{$root.m0}}</text>
+          <text class="user-remark" wx:if="{{}}">{{userInfo.remark}}</text>
+          <text class="user-remark" wx:if="{{}}"></text>
         </view>
         <view bindtap="settingBaseInfo" class="btn" style="background-color: rgba(230, 242, 255, 1); line-height:20px; border-radius:10px; height: 26px; width:100%; padding: 2px 4px; box-sizing: border-box; display:flex; align-items: center; justify-content: center;">
           <text class="icon" style="color:#74aeea; font-size:16px; margin-right: 4px;"></text>
@@ -27,11 +27,11 @@
       info dot
       line-width="60" color="transparent"
       bind:_l="_l" bind:change="tagChange" active="{{currentTab}}" 
-      list="{{tabList}}" offset="{{[8,100}}" style="border-radius:10px;"></van-tabs>
+      list="{{tabList}}" style="border-radius:10px;"></van-tabs>
     </view>
     <view style="box-sizing:border-box; display:flex; align-items:center; justify-content:center;flex-direction:column;width:100%;" wx:if="{{currentTab==0&&isLogin}}">
       <view style="margin-top:16px; box-sizing:border-box;display:flex; align-items:center; justify-content:center;flex-direction:row;font-size:14px;">
-        <image bind:_l="_l" height="32px" shape="circle" src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" style="margin-right:4px;" width="32px"></image>
+        <image bind:_l="_l" height="32px" shape="circle" src="" style="margin-right:4px;" width="32px"></image>
         <view>
           <text>生成</text>
           <text style="color:#74aeea; margin-right:4px;">Peer名片</text>
@@ -40,7 +40,7 @@
       </view>
       <edu-info bind:_l bind:refresh="loadData" items="{{userInfo.educationList}}" style="width:100%;"></edu-info>
       <research-info bind:_l bind:refresh="loadData" items="{{userInfo.researchList}}" style="width:100%;"></research-info>
-      <internship bind:_l bind:refresh="loadData" items="{{userInfo.internshipList}}" style="width:100%;"></internshipo>
+      <internship bind:_l bind:refresh="loadData" items="{{userInfo.internshipList}}" style="width:100%;"></internship>
       <project-info bind:_l bind:refresh="loadData" items="{{userInfo.projectList}}" style="width:100%;"></project-info>
       <personality-tag-info bind:_l bind:refresh="loadData" items="{{userInfo.tagsList}}" style="width:100%;"></personality-tag-info>
       <statement-tag-info bind:_l bind:refresh="loadData" items="{{userInfo.tagsList}}" style="width:100%;"></statement-tag-info>
@@ -50,7 +50,7 @@
       </view>
       <view style="margin-top:16px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-direction:column;width:100%;border-radius:12px;background-color:rgba(247, 251, 255, 100);color:rgba(85, 85, 85, 100);box-shadow:0px 2px 6px 0px rgba(0, 0, 0, 0.1);border:1px solid rgba(222, 235, 247, 100);padding:8px;">
         <view style="display:flex;align-items:center;justify-content:flex-start;flex-direction:row;font-size:14px;">
-          <image bind:_l="_l" height="32px" shape="circle" src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" style="margin-right:4px;" vueId="ffa91980-11" width="32px"></image>
+          <image bind:_l="_l" height="32px" shape="circle" src="" style="margin-right:4px;" width="32px"></image>
           <view>
             <text style="margin-right:4px;">发布动态</text>
             <text>与Peers分享生活经历🎐</text>
@@ -68,7 +68,7 @@
       <view class="content_login">
         <view class="intro">Hi 🎐 欢迎来到Peer！☁️</view>
         <view class="intro" style="line-height:2;">
-          <text style="margin-right:4px;"">在这里</view>
+          <text style="margin-right:4px;">在这里</text>
           <text>你能关联</text>
           <text class="tag" color="#6fa9e3">专业研究</text>
           <text class="tag" color="#6fa9e3">实习经历</text>
@@ -89,28 +89,27 @@
         </button>
       </view>
     </view>
-    <van-popup bind:_l="_l" bind:input="_e" round show="showPopUpImage"
+    <van-popup bind:click="showPopUpImage" round show="showPopUpImage"
     mode="center" value="{{showPopUpImage}}">
       <view class="popUpImage">
         <image bind:_l="_l" round height="240px" shape="square"
-        src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" width="240px"></image>
-        <text class="nick-name" style="font-weight=700;">{{userInfo.nickNmae+''}}</text>
+        src="" width="240px"></image>
+        <text class="nick-name" style="font-weight=700;">{{userInfo.nickName+''}}</text>
       </view>
     </van-popup>
     <van-popup class="dialog" 
-      bind:_l="_l" 
       show="{{ show }}" closeable 
       round position="bottom" custom-style="height: 50%" 
       bind:close="onClose"
       value="{{isPhoneLogin}}">
       <view class="dislog_content">
         <view class="dislog_content_inner">
-          <van-field bind:_l="_l" bind:input="_e" 
+          <van-field bind:input="getInputPhoneNumber" 
           class="dialog_content_input" 
           value="{{ mobile }}" 
           focus
           bind:change="onChange"
-          data-value="mobile" type="number"
+          type="number"
           center clearable 
           label="手机号" labelWidth="100" 
           maxlength="11" placeholder="请填写手机号" 
