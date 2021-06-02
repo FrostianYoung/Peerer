@@ -1,9 +1,0 @@
-/* components/peer_navBar/peer_navBar.wxss */
-.navBar {
-  height: 30px;
-}
-.logo_mini {
-  width: 59.8px; 
-  height:26px; 
-  box-shadow:none;
-}

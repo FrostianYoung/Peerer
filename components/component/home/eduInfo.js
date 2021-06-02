@@ -4,7 +4,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    items: {
+      type: Array,
+      default: []
+    }
   },
 
   /**
@@ -23,57 +26,66 @@ Component({
       wx.getStorage({
         key: "degree",
         success: function(res) {
-          this_.degree = res.data;
+          this_.data.degree = res.data;
         }
       });
     },
-    switchSN: function(n, t) {
+    switchSN: function(source, target) {
       var this_ = this;
       wx.showLoading({
         title: '加载中...',
       }),
       wx.getStorage({
         key: "token",
-        success: function(r) {
-          r.data.accessToken ?
+        success: function(res) {
+          if(res.data.accessToken) {
             wx.request({
               url: 'https://peerer.cn/api/v1/uc/educationExperience/switchSN',
               method: 'PUT',
               header: {
-                Authorization: r.data.accessToken
+                Authorization: res.data.accessToken
               },
               data: {
-                sourceId: this_.items[n].id,
-                targetId: this_.items[t].id
+                sourceId: this_.items[source].id,
+                targetId: this_.items[target].id
               },
               success: function(res) {
-                res.data.status?
-                  this_.$emit("refresh") :
+                if(res.data.status){
+                  this_.triggerEvent('refresh') 
+                } else {
                   console.log(res.data.error);
+                }
               },
               fail: function(err) {
                 console.log(err);
               }
-            }) : (wx.clearStorage(),
+            })
+          } else {
+              wx.clearStorage(),
               wx.switchTab({
-                url: '/pages/find/find',
+                url: '/pages/association/association',
                 success: function() {
                   var page = getCurrentPages().pop();
-                  void 0 != page && nul != page && page.onLoad();
+                  if(0 == page || null == page || !page.onLoad()){
+                    console.log('pageError');
+                  }
                 },
                 fail: function(err) {
                   console.log(err);
                 }
-              }));
+              })
+          }
         },
         fail: function(err) {
           console.log(err),
           wx.clearStorage(),
           wx.switchTab({
-            url: '/pages/find/find',
+            url: '/pages/association/association',
             success: function() {
               var page = getCurrentPages().pop();
-              void 0 != page && nul != page && page.onLoad();
+              if(0 == page || null == page || !page.onLoad()){
+                console.log('pageError');
+              }
             },
             fail: function(err) {
               console.log(err);
@@ -82,11 +94,13 @@ Component({
         }
       });
     },
-    toEduInfoEdit: function(res) {
+    toEduInfoEdit: function(eduId) {
       var len = 0;
-      this.items && (len = this.items.length),
+      if(this.items) {
+        len = this.items.length;
+      }
       wx.navigateTo({
-        url: '/components/component/home/eduInfoEdit?eduInfoEdit?eduId=' + n + "&eduLength=" + len,
+        url: '/components/component/home/eduInfoEdit?eduId=' + eduId + "&eduLength=" + len,
         fail: function(err) {
           console.log(err);
         }
@@ -94,11 +108,16 @@ Component({
     },
     eduFormartter: function(res) {
       if(this.degree) {
-        var eduInfo = res.school.name + " · " + res.specialism.name + " · ";
-        return this.degree.forEach(function(t) {
-          t.dictValue == res.degree && (eduInfo += t.dictShowName);
-        }), eduInfo += " · " + res.grade;
+        var eduText = res.school.name + " · " + res.specialism.name + " · ";
+        return this.degree.forEach(
+          function(t) {
+          if(t.dictValue == res.degree) {
+            eduText += t.dictShowName;
+          }
+          },
+          eduText += " · " + res.grade
+        )
       }
-    }
+    } 
   }
 })

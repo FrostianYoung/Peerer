@@ -1,2 +1,153 @@
 <!--components/component/userInfo.wxml-->
-<text>components/component/userInfo.wxml</text>
+<view class="body ">
+    <view class="base-info ">
+        <u-image bind:__l="__l" bind:click="__e"  data-event-opts="{{[ [ '^click',[ ['e0'] ] ] ]}}" height="80px" shape="circle" src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" vueId="20d75fa6-1" width="80px"></u-image>
+        <view class="base-info_content ">
+            <view class="base-info_content_text ">
+                <view class="user-name ">{{userInfo.nickName+''}}<text class="icon " style="color:rgb(119, 119, 119);margin-left:4px;" wx:if="{{userInfo.sex=='0'}}"></text>
+                    <text class="icon " style="color:rgb(119, 119, 119);margin-left:4px;" wx:if="{{userInfo.sex=='1'}}"></text>
+                </view>
+                <text class="user-remark " wx:if="{{userInfo.remark}}">{{userInfo.remark}}</text>
+                <text class="user-remark " wx:if="{{userInfo.educationList&&!userInfo.remark}}">{{$root.m0}}</text>
+            </view>
+            <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'recognized',['$event'] ] ] ] ]}}" wx:if="{{userId!=user.user.userInfo.id}}">
+                <view class="link-btn " wx:if="{{userInfo.from&&userInfo.to}}">
+                    <view  style="width:64px;height:24px;line-height:20px;border-radius:12px;background-color:rgba(248, 248, 248, 100);color:rgba(123, 189, 255, 100);font-size:14px;text-align:center;border:1px solid rgba(123, 189, 255, 100);display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                        <text class="icon " style="color:#74aeea;font-size:16px;margin-right:4px;"></text>互可</view>
+                </view>
+                <view class="link-btn " wx:if="{{userInfo.from==false&&userInfo.to}}">
+                    <view  style="width:64px;height:24px;line-height:20px;border-radius:12px;background-color:rgba(248, 248, 248, 100);color:rgba(208, 208, 208, 100);font-size:14px;text-align:center;border:1px solid rgba(208, 208, 208, 100);display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                        <text class="icon " style="color:rgba(208, 208, 208, 100);font-size:16px;margin-right:4px;"></text>已可</view>
+                </view>
+                <view class="link-btn " wx:if="{{userInfo.from&&userInfo.to==false}}">
+                    <view catchtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'ke',['$event'] ] ] ] ]}}" style="width:64px;height:24px;line-height:20px;border-radius:12px;background-color:rgba(219, 238, 255, 100);color:rgba(123, 189, 255, 100);font-size:14px;text-align:center;border:1px solid rgba(123, 189, 255, 100);display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                        <text class="icon " style="color:#74aeea;font-size:16px;margin-right:4px;"></text>可Ta</view>
+                </view>
+                <view class="link-btn " wx:if="{{userInfo.from==false&&userInfo.to==false}}">
+                    <view catchtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'ke',['$event'] ] ] ] ]}}" style="width:64px;height:24px;line-height:20px;border-radius:12px;background-color:rgba(241, 249, 255, 100);color:rgba(123, 189, 255, 100);font-size:14px;text-align:center;border:1px solid rgba(123, 189, 255, 100);display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                        <text class="icon " style="color:#74aeea;font-size:16px;margin-right:4px;"></text>可Ta</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view bindtap="__e" class="new_ke_card " data-event-opts="{{[ [ 'tap',[ [ 'showSecondDegreeRecognized',['$event'] ] ] ] ]}}" wx:if="{{$root.m1>0}}">
+        <text  style="margin-left:8px;">我可的</text>
+        <view class="new_ke_card_image ">
+            <view class="{{['',index>0?'image-group':'']}}" wx:for="{{$root.l0}}" wx:key="index">
+                <u-image bind:__l="__l"  height="28px" shape="circle" src="{{item.avatarUrl?item.avatarUrl:defaultAvatar}}" style="box-shadow:rgb(0 0 0 / 10%) 0px 2px 6px 0px;border-radius:30px;" vueId="{{'20d75fa6-2-'+index}}" width="28px"></u-image>
+            </view>
+        </view>
+        <text  style="margin-left:8px;">也可了ta</text>
+        <text  style="color:#74aeea;font-size:18px;font-weight:700;margin:0px 8px;">{{''+secondDegreeRecognizeds.totalCount}}</text>
+    </view>
+    <view class="tabs ">
+        <u-tabs activeColor="#89bbee" badgeBgColor="#74aeea" barWidth="60" bgColor="transparent" bind:__l="__l" bind:change="__e"  current="{{currentTab}}" data-event-opts="{{[ [ '^change',[ ['change'] ] ] ]}}" inactiveColor="#bbbbbb" isScroll="{{false}}" list="{{tabList}}" offset="{{[8,100]}}" style="border-radius:10px;" vueId="20d75fa6-3"></u-tabs>
+    </view>
+    <view  style="display:flex;align-items:center;justify-content:flex-start;flex-direction:column;box-sizing:border-box;width:calc(100vw - 32px);" wx:if="{{currentTab==0}}">
+        <view class="content-body ">
+            <view class="content-line " wx:if="{{userInfo.educationList}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  style="margin-bottom:0.2rem;" wx:for="{{$root.l1}}" wx:key="index">{{''+item.m2+''}}</view>
+                </view>
+            </view>
+            <view class="content-line " wx:if="{{userInfo.researchList}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  wx:for="{{userInfo.researchList}}" wx:key="index">
+                        <view  style="display:flex;align-items:flex-start;justify-content:flex-start;">
+                            <text bindtap="__e" class="simp-tag " data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['1','$0','$1'],[ [ ['userInfo.researchList','',index,'domain.name'] ],[ ['userInfo.researchList','',index,'domain.id'] ] ] ] ] ] ]}}">{{item.domain.name}}</text>
+                            <text class="title ">{{item.name}}</text>
+                        </view>
+                        <view class="sub-title " style="width:100%;margin-top:4px;" wx:if="{{item.description}}">
+                            <text >{{item.description}}</text>
+                        </view>
+                        <view  style="width:100%;float:left;" wx:else></view>
+                    </view>
+                </view>
+            </view>
+            <view class="content-line " wx:if="{{userInfo.internshipList}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  wx:for="{{$root.l2}}" wx:key="index">
+                        <view  style="display:flex;align-items:center;justify-content:flex-start;">
+                            <text bindtap="__e" class="simp-tag " data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['2',item.m3,'$0'],[ [ ['userInfo.internshipList','',index,'industry.category'] ] ] ] ] ] ]}}">
+                                <text  style="margin-right:4px;">{{''+item.m4+' -'}}</text>
+                                <text >{{''+item[$orig].industry.name}}</text>
+                            </text>
+                            <text class="title ">{{item[$orig].company.name+' · '+item[$orig].job.name}}</text>
+                        </view>
+                        <view class="sub-title " style="width:100%;margin-top:4px;" wx:if="{{item[$orig].description}}">
+                            <text >{{item[$orig].description}}</text>
+                        </view>
+                        <view  style="width:100%;float:left;" wx:else></view>
+                    </view>
+                </view>
+            </view>
+            <view class="content-line " wx:if="{{userInfo.projectList}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  wx:for="{{$root.l3}}" wx:key="index">
+                        <view  style="display:flex;align-items:center;justify-content:flex-start;">
+                            <text bindtap="__e" class="simp-tag " data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['3',item.m5,'$0'],[ [ ['userInfo.projectList','',index,'category'] ] ] ] ] ] ]}}">{{''+item.m6}}</text>
+                            <text class="title ">{{item[$orig].name+' · '+item[$orig].job}}</text>
+                        </view>
+                        <view class="sub-title " style="width:100%;margin-top:4px;" wx:if="{{item[$orig].description}}">
+                            <text >{{item[$orig].description}}</text>
+                        </view>
+                        <view  style="width:100%;float:left;" wx:else></view>
+                    </view>
+                </view>
+            </view>
+            <view class="content-line " wx:if="{{$root.m7}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  style="{{item.tag.category!='personality'?'display: none':''}}" wx:for="{{userInfo.tagsList}}" wx:key="index">
+                        <view  style="display:flex;align-items:flex-start;justify-content:flex-start;" wx:if="{{item.tag.category=='personality'}}">
+                            <view bindtap="__e" class="simp-tag " data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['4','$0','$1','$2'],[ [ ['userInfo.tagsList','',index,'tag.name'] ],[ ['userInfo.tagsList','',index,'tag.id'] ],[ ['userInfo.tagsList','',index,'tag.icon'] ] ] ] ] ] ]}}">
+                                <text  style="margin-right:4px;" wx:if="{{item.tag.icon}}">{{''+item.tag.icon+''}}</text>
+                                <text >{{''+item.tag.name}}</text>
+                            </view>
+                            <view  wx:if="{{item.description}}">
+                                <text class="title ">{{item.description}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="content-line " wx:if="{{$root.m8}}">
+                <text class="icon " style="font-size:24px;color:rgb(116, 174, 234);"></text>
+                <view class="content ">
+                    <view  style="{{item.tag.category!='statement'?'display: none':''}}" wx:for="{{userInfo.tagsList}}" wx:key="index">
+                        <view  style="display:flex;align-items:flex-start;justify-content:flex-start;" wx:if="{{item.tag.category=='statement'}}">
+                            <text bindtap="__e" class="simp-tag " data-event-opts="{{[ [ 'tap',[ [ 'toCircle',['5','$0','$1','$2'],[ [ ['userInfo.tagsList','',index,'tag.name'] ],[ ['userInfo.tagsList','',index,'tag.id'] ],[ ['userInfo.tagsList','',index,'tag.icon'] ] ] ] ] ] ]}}">
+                                <text  style="margin-right:4px;" wx:if="{{item.tag.icon}}">{{''+item.tag.icon+''}}</text>
+                                <text >{{''+item.tag.name}}</text>
+                            </text>
+                            <view class="sub-title " wx:if="{{item.description}}">
+                                <text  style="background-color:#ffffff;padding-left:2px;white-space:normal;word-break:break-all;overflow:hidden;display:block;max-width:196px;">{{item.description}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view  style="margin-top:32px;width:100%;display:flex;align-items:center;" wx:if="{{page.data.length!=0}}">
+            <text class="icon " style="color:#86bcf2;margin-right:4px;font-size:26px;"></text>
+            <text  style="color:#aaaaaa;">Ta的动态</text>
+        </view>
+        <view class="warp ">
+            <friend-zone-card bind:__l="__l" bind:refreshData="__e"  data-event-opts="{{[ [ '^refreshData',[ ['refreshData'] ] ] ]}}" degree="{{degree}}" experience="{{experience}}" industry="{{industry}}" item="{{item}}" style="width:100%;" vueId="{{'20d75fa6-4-'+index}}" wx:for="{{page.data}}" wx:key="index"></friend-zone-card>
+            <u-loadmore bind:__l="__l"  status="{{status}}" vueId="20d75fa6-5" wx:if="{{page.data.length!=0}}"></u-loadmore>
+        </view>
+    </view>
+    <view  style="width:100%;" wx:if="{{currentTab==1}}">
+        <my-friend-zone bind:FriendZonetalCount="__e" bind:__l="__l"  data-event-opts="{{[ [ '^FriendZonetalCount',[ ['FriendZonetalCount'] ] ] ]}}" degree="{{degree}}" experience="{{experience}}" industry="{{industry}}" memberId="{{userId}}" vueId="20d75fa6-6"></my-friend-zone>
+    </view>
+    <u-popup bind:__l="__l" bind:input="__e" borderRadius="26"  data-event-opts="{{[ [ '^input',[ [ '__set_model',[ '','showPopUpImage','$event',[] ] ] ] ] ]}}" mode="center" value="{{showPopUpImage}}" vueId="20d75fa6-7" vueSlots="{{['default']}}">
+        <view class="popUpImage ">
+            <u-image bind:__l="__l" borderRadius="24"  height="240px" shape="square" src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" vueId="{{'20d75fa6-8'+','+'20d75fa6-7'}}" width="240px"></u-image>
+            <text class="nick-name " style="font-weight:700;">{{''+userInfo.nickName+''}}</text>
+        </view>
+    </u-popup>
+</view>

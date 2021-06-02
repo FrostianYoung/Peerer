@@ -1,13 +1,13 @@
 // pages/mine/mine.js
-let app = getApp()
+var app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    statusBarHeight : wx.getSystemInfoSync().statusBarHeight + 70 + 'px',
-    defaultAvatar: "/images/v2_qn75yc.jpg",
+    statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 70 + 'px',
+    defaultAvatar: "/static/images/defaultAvatar.jpg",
     userId: "",
     userInfo: {},
     currentTab: 0,
@@ -20,213 +20,212 @@ Page({
     degree: void 0,
     experience: void 0,
     industry: void 0,
-    showPopUpImage: false,
+    showImage: false,
+    showLogin: false,
     isEditing: false,
     isLogin: false,
     isPhoneLogin: false,
     mobile: "",
     code: "",
-    codeText: "获取验证码"
+    codeText: "获取验证码",
+    currentTime: 3,
+    canGetCode: true, //获取验证码按钮是否可用
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  },
-  tabSelect(e) {
-    this.setData({
-      TabCur: e.currentTarget.dataset.id,
-      scrollLeft: (e.currentTarget.dataset.id-1)*60
-    })
-  },
-  checkAvatar: function(param){ // todo
-    wx.switchTab({
-      url: '/pages/association/association',
-    })
-  },
-
-  getDegree: function() {
+  getDegree: function () {
     var this_ = this;
     wx.getStorage({
       key: "degree",
-      success: function(res) {
-        this_.degree = res.data;
+      success: function (res) {
+        this_.data.degree = res.data;
       }
     });
   },
-  getExperience: function() {
+  getExperience: function () {
     var this_ = this;
     wx.getStorage({
       key: "experience",
-      success: function(res) {
-        this_.experience = res.data;
+      success: function (res) {
+        this_.data.experience = res.data;
       }
     });
   },
-  getIndustry: function() {
+  getIndustry: function () {
     var this_ = this;
     wx.getStorage({
       key: "industry",
-      success: function(res) {
-        this_.industry = res.data;
+      success: function (res) {
+        this_.data.industry = res.data;
       }
     });
   },
-  formartterEduInfo: function(e) {
-    return (e.school.name ? e.shcool.name : "") + " · " + (e.specialism.name ? e.specialism.name : "")
-    + " · " + (e.grade ? e.grade : "") + " " + (e.degree ? this.formartterDegree(e.degree) : "");
+  formartterEduInfo: function (e) {
+    return (e.school.name ? e.shcool.name : "") + " · " + (e.specialism.name ? e.specialism.name : "") +
+      " · " + (e.grade ? e.grade : "") + " " + (e.degree ? this.formartterDegree(e.degree) : "");
   },
-  baseFormartterEduInfo: function(e) {
-    return "from "+ (e.school.abbreviation ? e.school.abbreviation : "") + " " + (e.specialism.name ? e.specialism.name : "");
+  baseFormartterEduInfo: function (e) {
+    return "from " + (e.school.abbreviation ? e.school.abbreviation : "") + " " + (e.specialism.name ? e.specialism.name : "");
   },
-  formartterDegree: function(e) {
-    if(this.degree) return this.degree.find(function(t) {
+  formartterDegree: function (e) {
+    if (this.degree) return this.degree.find(function (t) {
       return t.dictValue == e;
     }).dictShowName;
   },
-  formartterIndustry: function(e) {
-    if(this.industry) return this.industry.find(function(t) {
+  formartterIndustry: function (e) {
+    if (this.industry) return this.industry.find(function (t) {
       return t.dictValue == e;
     }).dictShowName;
   },
-  formarrterExperience: function(e) {
-    if(this.experience) return this.experience.find(function(t) {
+  formarrterExperience: function (e) {
+    if (this.experience) return this.experience.find(function (t) {
       return t.dictValue == e;
     }).dictShowName;
   },
-  toCircle: function(t, n, o, i) {
-    this.topicType = t,
-    this.topiName = n,
-    this.topicId = o,
-    this.topicIcon = i || "",
-    wx.navigateTo({
-      url: "/components/component/friendZoneCircle?topicId=" + this.topicId +"&topicType= " +
-      this.topicType + "&topicIcon=" + this.topicIcon + "&topicName=" + this.topicName,
-      fail: function(err) {
-        console.log(err);
-      }
-    });
+  toCircle: function (type, name, id, icon) {
+    this.data.topicType = type,
+      this.data.topiName = name,
+      this.data.topicId = id,
+      this.data.topicIcon = icon || "",
+      wx.navigateTo({
+        url: "/components/component/friendZoneCircle?topicId=" + this.data.topicId + "&topicType=" +
+          this.data.topicType + "&topicIcon=" + this.data.topicIcon + "&topicName=" + this.topicName,
+        fail: function (err) {
+          console.log(err);
+        }
+      });
   },
-  loadData: function() {
+  loadData: function () {
     var this_ = this;
     wx.showLoading({
-      title: '加载中...',
-    }),
-    wx.getStorage({
-      key: "token",
-      success: function(res) {
-        res.data.accessToken ?
-          wx.getStorage({
-            key: "userInfo",
-            success: function(o) {
-              this_.userId = o.data.id,
-              wx.request({
-                url: 'https://peerer.cn/api/v1/uc/member/' + t.userId,
-                method: "GET",
-                header: {
-                  Authorization: n.data.accessToken
-                },
-                success: function(n) {
-                  n.data.status ?
-                  (this_.userInfo = n.data.result,
-                    this_.userInfo.avatar && this_.userInfo.nickName && this_.userInfo.sex ?
-                    this_.userInfo.educationList || (wx.showToast({
-                      title: '请完善教育信息',
-                    }),
-                    wx.navigateTo({
-                      url: '/components/componet/home/eduInfoEdit?eduId=&eduLength=0',
-                      fail: function(err) {
-                        console.log(err);
+        title: '加载中...',
+      }),
+      wx.getStorage({
+        key: "token",
+        success: function (res) {
+          if (res.data.accessToken) {
+            wx.getStorage({
+              key: "userInfo",
+              success: function (userInfo) {
+                this_.data.userId = userInfo.data.id,
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/uc/member/' + this_.data.userId,
+                    method: "GET",
+                    header: {
+                      Authorization: res.data.accessToken
+                    },
+                    success: function (res1) {
+                      if (res1.data.status) {
+                        this_.userInfo = res1.data.result;
+                        if (this_.userInfo.avatar && this_.userInfo.nickName && this_.userInfo.sex) {
+                          if (this_.userInfo.educationList) {} else {
+                            wx.showToast({
+                              title: '请完善教育信息',
+                            })
+                            wx.navigateTo({
+                              url: '/components/component/home/eduInfoEdit?eduId=&eduLength=0',
+                              fail(err) {
+                                console.log(err);
+                              }
+                            })
+                          }
+                        } else {
+                          wx.showToast({
+                            title: '请完善基本信息',
+                          })
+                          this_.settingBaseInfo();
+                        }
+                      } else {
+                        console.log(res1.data.error);
+                        wx.hideLoading(),
+                          wx.stopPullDownRefresh();
                       }
-                    })) :
-                    (wx.showToast({
-                      title: '请完善基本信息',
-                    }),
-                    this_.settingBaseInfo())) :
-                    console.log(n.data.error),
-                    wx.hideLoading(),
-                    wx.stopPullDownRefresh();
-                },
-                fail: function(err) {
-                  wx.hideLoading(),
-                  wx.stopPullDownRefresh(),
-                  console.log(err);
-                }
-              }), wx.request({
-                url: 'https://peerer.cn/api/v1/bbs/post/discover',
-                method: "GET",
-                header: {
-                  Authorization: n.data.accessToken
-                },
-                data: {
-                  pageNo: 1,
-                  pageSize: 10,
-                  memberId: this_.userId? this_.userId : null
-                },
-                success: function(res) {
-                  res.data.status ?
-                    this_.tabList[1].count = Number(res.data.result.totalCount) :
-                    console.log(res.data.error);
-                },
-                fail: function(err) {
-                  console.log(err);
-                }
-              });
-            }
-          }) : wx.clearStorage();
-      },
-      fail: function(err) {
-        console.log(err),
-        wx.clearStorage(),
-        wx.hideLoading(),
-        wx.stopPullDownRefresh();
-      }
-    });
+                    },
+                    fail(err) {
+                      wx.hideLoading(),
+                        wx.stopPullDownRefresh(),
+                        console.log(err);
+                    }
+                  }),
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/bbs/post/discover',
+                    method: "GET",
+                    header: {
+                      Authorization: res.data.accessToken
+                    },
+                    data: {
+                      pageNo: 1,
+                      pageSize: 10,
+                      memberId: this_.data.userId ? this_.data.userId : null
+                    },
+                    success(res) {
+                      if (res.data.status) {
+                        this_.tabList[1].count = Number(res.data.result.totalCount);
+                      } else {
+                        console.log(res.data.error);
+                      }
+                    },
+                    fail(err) {
+                      console.log(err);
+                    }
+                  });
+              }
+            })
+          } else {
+            wx.clearStorage();
+          }
+        },
+        fail(err) {
+          console.log(err),
+            wx.clearStorage(),
+            wx.hideLoading(),
+            wx.stopPullDownRefresh();
+        }
+      });
   },
-  tabChange: function(tab) {
-    this.currentTab = tab;
+  tabChange: function (e) {
+    this.setData({
+      currentTab: e.detail.index
+    })
   },
-  hasTag: function(tag) {
-    if( !this.userInfo.tagsList) return false;
-    for(var i = 0 ; i < this.userInfo.tagsList.length; i++ ){
-      if(this.userInfo.tagsList[i].tag.category == 0){
+  hasTag: function (tag) {
+    if (!this.userInfo.tagsList) return false;
+    for (var i = 0; i < this.userInfo.tagsList.length; i++) {
+      if (this.userInfo.tagsList[i].tag.category == tag) {
         return true;
       }
-      
     }
     return false;
   },
-  toMessageDetail: function() {
+  toMessageDetail: function () {
     wx.navigateTo({
-      url: '/components/component/messageDetail?userId=' + this.userId,
-      fail: function(err) {
+      url: '/components/component/messageDetail?userId=' + this.data.userId,
+      fail: function (err) {
         console.log(err);
       }
     });
   },
-  showSecondDegreeRecognized: function() {
+  showSecondDegreeRecognized: function () {
     wx.navigateTo({
-      url: '/components/component/friend?type=4&memberId=' + this.userId,
-      fail: function(err) {
+      url: '/components/component/friend?type=4&memberId=' + this.data.userId,
+      fail: function (err) {
         console.log(err);
       }
     });
   },
-  FriendZonetalCount: function(cnt) {
-    this.tabList[1].count = cnt;
+  FriendZonetalCount: function (cnt) {
+    this.data.tabList[1].count = cnt;
   },
-  settingBaseInfo: function() {
+  settingBaseInfo: function () {
     wx.navigateTo({
       url: '/components/component/home/settingBaseInfo',
-      fail: function(err) {
+      fail: function (err) {
         console.log(err);
       }
     });
   },
-  editUserInfo: function() {
-    this.isEditing = true;
+  editUserInfo: function () {
+    this.data.isEditing = true;
   },
+  /*
   logout: function() {
     wx.showModal({
       title: '提示',
@@ -251,353 +250,383 @@ Page({
       }
     });
   },
-  savingUserInfo: function() {
+  */
+  savingUserInfo: function () {
     this.isEditing = false,
-    this.loadData();
+      this.loadData();
   },
-  publish: function() {
+  publish: function () {
     wx.navigateTo({
       url: '/components/component/publishFriendZone',
-      fail: function(err) {
+      fail: function (err) {
         console.log(err);
       }
     });
   },
-  getMessageNumber: function() {
+  getMessageNumber: function () {
     wx.getStorage({
       key: "token",
-      success: function(res) {
-        res.data.accessToken ? 
+      success: function (res) {
+        if (res.data.accessToken) {
           wx.request({
             url: 'https://peerer.cn/api/v1/uc/messageThread/latest',
             method: "GET",
             header: {
               Authorization: res.data.accessToken
             },
-            success: function(t) {
-              t.data.status ?
-                t.data.result >= 1 ?
+            success: function (t) {
+              if (t.data.status) {
+                if (t.data.result >= 1) {
                   wx.setTabBarBadge({
                     index: 2,
                     text: t.data.result.toString(),
-                  }) : wx.removeTabBarBadge({
-                    index: 2,
-                  }) : (console.log(t.data.error),
+                  })
+                } else {
                   wx.removeTabBarBadge({
                     index: 2,
-                 }));
+                  })
+                }
+              } else {
+                console.log(t.data.error),
+                  wx.removeTabBarBadge({
+                    index: 2,
+                  })
+              }
             },
-           fail: function(err) {
+            fail: function (err) {
               console.log(err),
-              wx.removeTabBarBadge({
-                index: 2,
-              });
+                wx.removeTabBarBadge({
+                  index: 2,
+                });
             }
-          }) : wx.clearStorage();
+          })
+        } else {
+          wx.clearStorage();
+        }
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log(err),
-        wx.removeTabBarBadge({
-          index: 2,
-        });
+          wx.removeTabBarBadge({
+            index: 2,
+          });
       }
     });
   },
-  click_isLogin: function() {
+  click_isLogin: function () {
     var this_ = this;
     wx.getStorage({
       key: "token",
-      success: function(res) {
-        res.data.accessToken ?
-          this_.isLogin = true :
-            (wx.clearStorage(),
-            this_.isPhoneLogin || wx.login({
-              provider: "weixin",
-              success: function(res) {
-                wx.setStorage({
-                  key: "loginResCode",
-                  data: res.code,
-                  success: function() {
-                    this_.isLogin = false;
-                  }
-                });
-              },
-              fail: function(err) {
-                console.log(err),
-                this_.isPhoneLogin = true;
-              }
-            }));
+      success: function (res) {
+        if (res.data.accessToken) {
+          if (this_.data.isLogin) {
+            wx.clearStorage();
+            if (!this_.data.isPhoneLogin) {
+              wx.login({
+                provider: "weixin",
+                success(res) {
+                  wx.setStorage({
+                    key: "loginResCode",
+                    data: res.code,
+                    success() {
+                      this_.isLogin = false;
+                    },
+                    fail(err) {
+                      console.log(err);
+                    }
+                  })
+                },
+                fail(err) {
+                  console.log(err);
+                  this_.data.isLogin = false;
+                }
+              })
+            } else {
+              this_.phoneLogin();
+            }
+          }
+        }
       },
-      fail: function(res) {
-        wx.clearStorage(),
-        this_.isPhoneLogin ?
-          this_.isLogin = true :
+      fail(res) {
+        wx.clearStorage();
+        if (this_.data.isPhoneLogin) {
+          if (this_.data.isLogin) {
             wx.login({
               provider: "weixin",
-              success: function(res) {
+              success(res) {
                 wx.setStorage({
                   key: "loginResCode",
                   data: res.code,
-                  success: function() {
+                  success() {
                     this_.isLogin = false;
+                  },
+                  fail(err) {
+                    console.log(err);
                   }
-                });
+                })
               },
-              fail: function(err) {
-                console.log(err),
-                this_.isPhoneLogin = true;
+              fail(err) {
+                console.log(err);
+                this_.data.isLogin = false;
               }
-            });
-      }
-    });
-  },
-  getPhoneNumber: function (res) { // 获取微信绑定手机号
-    var this_ = this;
-    this_.toMessageDetail.iv ? wx.getStorage({
-      key: "loginResCode",
-      success: function(n) {
-        if(n.data) {
-          var i = {
-            encryptedData: this_.detail.encryptedData,
-            iv: this_.detail.iv,
-            code: n.data
-          };
-          wx.request({
-            url: 'https://peerer.cn/api/v1/minapp/user/phone',
-            method: 'POST',
-            data: i,
-            success: function(suc) {
-              suc.data.status ?
-                this_.initLogin(suc) : 
-                (console.log(suc.data.error),
-                this_.isPhoneLogin = true);
-            },
-            fail: function(err) {
-              console.log(err),
-              this_.isPhoneLogin = true;
-            }
-          });
-        } else {
-          this_.isPhoneLogin = true;
+            })
+          }
         }
       }
-    }) : this_.isPhoneLogin = true;
+    })
   },
-  codeChange: function(res) {
-    this.codeText = res;
-  },
-  getCode(){ // 获取验证码
+  getMobileInput: function (e) { // 获取手机号的输入
     var this_ = this;
-    this.mobile ?
-      /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test(this.mobile) ?// 测试手机号格式
-       this.canGetCode ? // 判断是否可以获取验证码（根据倒计时）
-        (wx.showLoading({ // 可以获取验证码
-          title: "正在获取验证码",
+    var mobileInput = e.detail;
+    this_.setData({
+      mobile: mobileInput
+    })
+    //console.log(this_.data.mobile);
+  },
+  getCodeInput: function (e) {
+    var this_ = this;
+    var codeInput = e.detail;
+    this_.setData({
+      code: codeInput
+    })
+    console.log(this_.data.code);
+  },
+  openPhoneLogin: function () { // 手机号登录
+    this.data.isPhoneLogin = true;
+  },
+  getCode() { // 获取验证码
+    var this_ = this;
+    var phone = this_.data.mobile;
+    console.log(this_.data.mobile);
+    var myreg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
+    if (phone == '') {
+      wx.showToast({
+        title: '请输入手机号',
+        icon: 'none',
+      })
+      return false;
+    } else if (phone.length != 11) {
+      wx.showToast({
+        title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return false;
+    } else if (!myreg.test(phone)) {
+      wx.showToast({
+        title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return false;
+    } else if (!this_.data.canGetCode) {
+      wx.showToast({ // 不能获取Code
+        title: '倒计时结束后再发送',
+        icon: 'none'
+      })
+      return false;
+    } else {
+      wx.showLoading({
+          title: '正在获取验证码',
           icon: 'none'
-          }), 
-          wx.request({ // 从后端获取验证码
-            url: 'https://peerer.cn/api/v1/uc/member/verifycode',
-            method: "POST",
-            data: {
-              module: "login",
-              type: "sms",
-              key: this.mobile
-            },
-            success: function(res) { // 获取成功，显示等待信息
-              res.data.status ? 
-                setTimeout(function() { //设置定时器
-                  wx.hideLoading(), 
-                  this.start();
-                }, 1000) 
-              : (wx.hideLoading(), 
-                console.log(res.data.error),
+        }),
+        wx.request({
+          url: 'https://peerer.cn/api/v1/uc/member/verifycode',
+          method: 'POST',
+          data: {
+            module: "login",
+            type: "sms",
+            key: this.data.mobile
+          },
+          success(res) {
+            if (res.data.status) {
+              wx.hideLoading()
+            } else {
+              wx.hideLoading(),
+                console.log(res.data.errMsg),
                 wx.showToast({
                   title: '获取验证码错误',
                   icon: 'none'
-                }));
-            },
-            fail: function(err) {
-              wx.hideLoading(), 
-              console.log(err), 
+                })
+            }
+          },
+          fail(err) {
+            wx.hideLoading(),
+              console.log(err),
               wx.showToast({
                 title: '获取验证码错误',
                 icon: 'none'
               })
-            }
-          })
-        ) : (wx.showToast({ // 不能获取Code
-          title: '倒计时结束后再发送',
-          icon: 'none'
-          }))
-      :  (wx.showToast({ 
-        title: '"手机号格式不正确"',
-        icon: 'none'
+          }
         })
-      ) 
-     :  (wx.showToast({ // this.mobile为空 
-        title: '请输入手机号',
+      this_.setData({
+        canGetCode: true
+      })
+      var currentTime = this_.data.currentTime;
+      var interval = setInterval(function () {
+        currentTime--;
+        this_.setData({
+          codeText: currentTime + '秒'
+        })
+        if (currentTime <= 0) {
+          clearInterval(interval);
+          this_.setData({
+            currentTime: 3,
+            canGetCode: false,
+            codeText: '重新获取'
+          })
+        }
+      }, 1000)
+    }
+  },
+  phoneLogin: function () { //根据手机号登录
+    var this_ = this;
+    if (this_.data.mobile == '' || this_.data.code == '') {
+      wx.showToast({
+        title: '请输入手机号与验证码',
         icon: 'none'
       })
-    )
+    } else {
+      wx.request({
+        url: 'https://peerer.cn/api/v1/uc/member/login',
+        method: 'POST',
+        data: {
+          loginType: "0",
+          userName: this.data.mobile,
+          code: this.data.code
+        },
+        success(res) {
+          if (res.data.status) {
+            wx.showToast({
+              title: '登陆成功',
+              icon: 'none'
+            });
+            this_.initLogin(res);
+            this_.closeLoginPopUp();
+          } else {
+            wx.hideLoading(),
+              console.log(res.data.error),
+              wx.showToast({
+                title: '登录失败，请重试' + res.data.error.errorMessage,
+                icon: 'none'
+              })
+          }
+        },
+        fail(err) {
+          wx.hideLoading(),
+            console.log(err),
+            wx.showToast({
+              title: '登录失败，请重试',
+              icon: 'none',
+            });
+        }
+      });
+    }
   },
-  phoneLogin: function() { //根据手机号登录
+  getPhoneNumber: function (res) { // 获取微信绑定手机号
     var this_ = this;
-    this.mobile && this.code ? // 手机号和验证码非空
-    wx.request({ // 后端登录
-      url: 'https://peerer.cn/api/v1/uc/member/login',
-      method: "POST",
-      data: {
-        loginType: "0",
-        userName: this.mobile,
-        code: this.code
-      },
-      success: function(res) { // res中是服务器返回的内容，没有找到这个API，格式暂不明
-        if(res.data.status) {
-          wx.showToast({
-            title: '登陆成功',
-            icon: 'none',
-          })
-          var token = {};
-          token.accessToken = res.data.result.accessToken,
-          token.refreshToken = res.data.refreshToken,
-          wx.setStorage({ // 存储用户信息到本地
-            key: "token",
-            data: token,
-            success: function() {
-              wx.switchTab({ // 切换界面
-                url: '/pages/find/find',
-                success: function() { //以下内容暂未修改完成
-                  var t = r(s.default.mark(function t(o) {
-                    return s.default.wrap(function (t) {
-                      for(;;)
-                        switch(t.prev = t.next) {
-                          case 0:
-                            return t.next = 2, 
-                            wx.request({
-                              url: 'https://peerer.cn/api/v1/base/dict/degree/values',
-                              method: "GET",
-                              header: {
-                                Authorization: n.data.result.accessToken
-                              },
-                              success: function(res) {
-                                res.data.status ? wx.setStorage({
-                                  key: "degree",
-                                  data: res.data.result,
-                                  fail: function(err){
-                                    console.log(err);
-                                  }
-                                }) : console.log(t.data.error);
-                              },
-                              fail: function(err){
-                                console.log(err);
-                              }
-                            });
-                          case 2:
-                            return t.next = 4, 
-                            wx.request({
-                              url: 'https://peerer.cn/api/v1/base/dict/experience/values',
-                              method: "GET",
-                              header: {
-                                Authorization: n.dta.result.accessToken
-                              },
-                              success: function(t) {
-                                t.data.status ? wx.setStorage({
-                                  key: "experience",
-                                  data: t.data.result,
-                                  fail: function(err) {
-                                    console.log(err);
-                                  }
-                                }) : console.log(t.data.error);
-                              },
-                              fail: function(err) {
-                                console.log(err);
-                              }
-                            });
-                          case 4:
-                            return t.next = 6, 
-                            wx.request({
-                              url: 'url',
-                            })
-                          case 6:
-                          case 8:
-                          case "end":
-                            return t.stop();
-                        }
-                    }, t);
-                  }));
-                  return function(e) {
-                    return t.apply(this, arguments);
-                  };
-                },
-                fail: function(err) {
+    if (res.detail.iv) {
+      wx.getStorage({
+        key: "loginResCode",
+        success(res1) {
+          if (res1.data) {
+            var i = {
+              encryptedData: res.detail.encryptedData,
+              iv: res.detail.iv,
+              code: res1.data
+            };
+            wx.request({
+              url: 'https://peerer.cn/api/v1/minapp/user/phone',
+              method: 'POST',
+              data: i,
+              success(res2) {
+                if (res2.data.status) {
+                  this_.initLogin(res2);
+                } else {
+                  console.log(res2.data.error);
+                  this_.data.isPhoneLogin = true;
+                }
+              },
+              fail(err) {
+                console.log(err),
+                  this_.isPhoneLogin = true;
+              }
+            })
+          } else {
+            this_.isPhoneLogin = true;
+          }
+        }
+      })
+    } else {
+      this_.data.isPhoneLogin = true;
+    }
+  },
+  showLoginPopUp() { // 展示login弹窗
+    this.setData({
+      showLogin: true
+    })
+  },
+  closeLoginPopUp() { // 关闭login弹窗
+    this.setData({
+      showLogin: false
+    })
+  },
+  showImagePopUp() { // 展示login弹窗
+    this.setData({
+      showImage: true
+    })
+  },
+  closeImagePopUp() { // 关闭login弹窗
+    this.setData({
+      showImage: false
+    })
+  },
+  initLogin: function (res) {
+    var this_ = this;
+    var token = {};
+    var accessToken = "";
+    if (res.data.result.token) {
+      token = res.data.result.token;
+      accessToken = res.data.result.token.accessToken;
+    } else {
+      token.accessToken = res.data.result.accessToken;
+      token.refreshToken = res.data.result.refreshToken;
+      accessToken = res.data.result.accessToken;
+    }
+    wx.setStorage({
+      key: "token",
+      data: token,
+      success: function () {
+        wx.request({
+          url: 'https://peerer.cn/api/v1/uc/member/fullUserInfo',
+          method: 'GET',
+          header: {
+            Authorization: accessToken
+          },
+          success (res1) {
+            if(res1.data.status){
+              wx.setStorage({
+                key: "fullUserInfo",
+                data: res1.data,
+                fail (err) {
                   console.log(err);
                 }
               });
+              console.log(res1.data);
+            } else {
+              console.log(res1.data.error);
             }
-          })
-        } else { // status = false, 登陆失败
-          wx.hideLoading(), 
-          console.log(res.data.error), 
-          wx.showToast({
-            title: '登录失败，请重试' + res.data.error.errorMessage,
-            icon: 'none',
-          })
-        }
-      },
-      fail: function(err) {
-        wx.hideLoading(), 
-        console.log(err), 
-        wx.showToast({
-          title: '登录失败，请重试',
-          icon: 'none',
-        })
-      }
-    }) : wx.showToast({ // 手机号与验证码有空的
-          title: '请输入手机号与验证码',
-          icon: 'none',
-        })
-  },
-  /*
-  initLogin: function(res) {
-    var this_ = this, token = {}, accessToken = "";
-    res.data.result.token ?
-      (token = res.data.result.token, accessToken = res.data.result.token.accessToken)
-      : (token.accessToken = res.data.result.accessToken,
-        token.refreshToken = res.data.result.refreshToken,
-        accessToken = res.data.result.accessToken),
-        wx.setStorage({
-          key: "token",
-          data: token,
-          success: function() {
-            var o = i(a.default.mark(function o() {
-              return a.default.wrap(function(o) {
-                for(;;) {
-                  switch (o.prev = o.next) {
-                    case 0:
-                      return o.next = 2,
-                      wx.request({
-                        url: 'url',
-                      })
-                    case 2:
-                    case 4:
-                    case 6:
-                    case 8:
-                    case "end":
-                      return o.stop();
-                  }
-                };
-            }));
-            return function() {
-              return o.apply(this, arguments);
-            };
+          },
+          fail (err) {
+            console.log(err);
           }
-        });
+        })
       },
-      refresh: function(){
-        this.click_isLogin(),
-        this.loadData(),
-        this.getMessageNumber();
+      fail(err) {
+        console.log(err);
       }
     })
-  }*/
+  },
+  refresh: function () {
+    this.phoneLogin(),
+      this.loadData(),
+      this.getMessageNumber();
+  }
 })

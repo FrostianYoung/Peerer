@@ -1,0 +1,16 @@
+{
+  "name": "peer",
+  "version": "1.0.0",
+  "description": "一个微信小程序端的大学生校园社交APP",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "miniprogram-simulate": "^1.4.0",
+    "mocha": "^8.4.0"
+  }
+}

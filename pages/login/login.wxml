@@ -53,8 +53,8 @@
       <van-field model:value="{{ code }}" 
       focus
       center clearable 
-      bind:input="getInputCode"
-      data-value="code" type="number"
+      bind:input="getCodeInput"
+      type="number"
       label="验证码" placeholder="请填写验证码"
       border="{{ false }}"></van-field>
       <button class="loginPeer" bindtap="phoneLogin">
@@ -64,6 +64,4 @@
       </button>
     </view>
   </van-popup>
-  
-  
 </view>

@@ -1,2 +1,84 @@
 <!--components/component/home/eduInfoEdit.wxml-->
-<text>components/component/home/eduInfoEdit.wxml</text>
+<view class="eduInfoEditPage">
+  <view class="body" wx:if="{{!schoolSettingVisible && !majorSettingVisible}}">
+    <view class="item">
+      <text class="icon">icon</text>
+    </view>
+    <view style="margin:16px;">
+      <van-field bind:click="_e" bind:input="_e" border="false" clearable
+      disabled placeholder="学校" value="{{form.school.name}}"></van-field>
+    </view>
+    <view style="margin:16px;">
+      <van-field bind:click="openMajorSettingVisible" placeholder="专业" value="{{form.specialism.name}}"></van-field>
+    </view>
+    <view style="margin:16px;">
+      <van-field bind:click="openMajorSettingVisible" placeholder="入学年级" value="{{form.specialism.name}}"></van-field>
+    </view>
+    <view style="margin:16px 0px 32px 0px;">
+      <van-field bind:click="openMajorSettingVisible" placeholder="学位" value="{{form.specialism.name}}"></van-field>
+    </view>
+    <view class="item1">
+      <view bindtap="editUserInfo">
+        <text class="icon">icon</text>
+      </view> 
+      <text bindtap="remove" class="icon">icon</text>
+    </view>
+    <van-piker bind:confirm="setGrade" bind:input="gradeSettingVisible" range="{{gradeList}}" mode="selector" value="{{gradeSettingVisible}}"></van-piker>
+    <van-piker bind:confirm="setDegree" bind:input="degreeSettingVisible" range="{{gradeList}}" mode="selector" value="{{degreeSettingVisible}}"></van-piker>
+  </view>
+  <view class="selectSchool_body" wx:if="{{schoolSettingVisible}}">
+    <view class="">
+      <text class="icon">icon</text>
+    </view>
+    <view style="">
+      <text class="icon">icon</text>
+      <van-field bind:input="selectSchoolName" placeholder="学校"></van-field>
+    </view>
+    <view wx:if="{{!showSchoolList}}">
+      <view bindtap="selectSchool" class="p3" wx:for="{{searchSchoolList}}" wx:for-index="index1" wx:for-item="school" wx:key="index1">
+        <view classs="selectSchool_tag">
+          <text style="margin-right: 4px;">{{school.name}}</text>
+          <text style="color:#69a9ea">{{school.abbreviation}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="selectSchool_group" wx:if="{{showSchoolList}}">
+      <view bindtap="switchToGroup">
+        <view>{{''+area.name+''}}</view>
+      </view>
+    </view>
+    <view class="selectSchool_item" wx:if="{{showSchoolList}}">
+      <view wx:for="{{schools}}" wx:for-item="area" wx:key="index">
+        <view >
+          <view>
+            <view class="selectSchool_category">{{area.name}}</view>
+          </view>
+          <view bindtap="selectSchool" wx:for="{{area.schoolList}}">
+            <view class="selectSchool_tag" wx:if="{{area.id==school.areaId}}">
+              <text>{{school.name}}</text>
+              <text>{{school.abbreviation}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="body_group" wx:if="{{majorSettingVisible}}">
+    <view class="title_major">
+      <view>类别</view>
+      <view>专业</view>
+    </view>
+    <view class="body_major">
+      <view class="category">
+        <view bindtap="" wx:for="{{specialism}}">
+          <view class="">{{''+item.dictShowName+''}}</view>
+        </view>
+      </view>
+      <view class="specialism">
+        <view bindtap="setMajor" wx:for="{{majorList}}">
+          <view class="">{{''+item.name+''}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

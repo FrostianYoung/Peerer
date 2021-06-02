@@ -2,33 +2,17 @@
   "pages": [
     "pages/mine/mine",
     "pages/login/login",
+    
     "pages/association/association",
-    "components/component/friend",
-    "components/component/peerCircle",
-    "components/component/userInfo",
-    "components/component/messageDetial",
-    "components/component/friendZoneCircle",
-    "components/component/friendZoneDetail",
-    "components/component/settingBaseInfo",
     "pages/find/find",
-    "components/component/publishFriendZone",
     "pages/message/message",
-    "components/component/friendZoneNewReply_1",
-    "components/component/friendZoneNewReply_2",
-    "components/component/home/eduInfoEdit",
-    "components/component/home/researchInfoEdit",
-    "components/component/home/internshipInfoEdit",
-    "components/component/home/projectInfoEdit",
-    "components/component/home/personalityInfoEdit",
-    "components/component/home/statementTagInfoEdit"
+    "components/component/home/settingBaseInfo"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F8F8F8",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom",
-    "backgroundColor": "#F8F8F8",
-    "backgroundTextStyle": "light"
+    "backgroundColor": "#F8F8F8"
   },
   "usingComponents": {
     "van-action-sheet": "./dist/action-sheet/index",
@@ -105,26 +89,26 @@
       {
         "pagePath": "pages/association/association",
         "text": "关联",
-        "iconPath": "images/icons/icon_association.png",
-        "selectedIconPath": "images/icons/icon_association_HL.png"
+        "iconPath": "/static/images/icons/icon_association.png",
+        "selectedIconPath": "/static/images/icons/icon_association_HL.png"
       },
       {
         "pagePath": "pages/find/find",
         "text": "发现",
-        "iconPath": "images/icons/icon_find.png",
-        "selectedIconPath": "images/icons/icon_find_HL.png"
+        "iconPath": "/static/images/icons/icon_find.png",
+        "selectedIconPath": "/static/images/icons/icon_find_HL.png"
       },
       {
         "pagePath": "pages/message/message",
         "text": "消息",
-        "iconPath": "images/icons/icon_message.png",
-        "selectedIconPath": "images/icons/icon_message_HL.png"
+        "iconPath": "/static/images/icons/icon_message.png",
+        "selectedIconPath": "/static/images/icons/icon_message_HL.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "text": "我的",
-        "iconPath": "images/icons/icon_mine.png",
-        "selectedIconPath": "images/icons/icon_mine_HL.png"
+        "iconPath": "/static/images/icons/icon_mine.png",
+        "selectedIconPath": "/static/images/icons/icon_mine_HL.png"
       }
     ]
   },

@@ -6,10 +6,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -webkit-box-pack: start;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
 }
 
 .tag {
@@ -34,8 +30,6 @@
 .content>view intro{
   margin-block-start: .5em;
   margin-block-end: .5em;
-  -webkit-margin-start: .5em;
-  -webkit-margin-after: .5em;
 }
 .content>view {
   background-color: #f8fcff;

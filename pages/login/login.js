@@ -8,7 +8,7 @@ Page({
    */
   data: {
     show: false, //是否显示登录弹窗
-    currentTime: 3,
+    currentTime: 30,
     canGetCode: true, //获取验证码按钮是否可用
     isPhoneLogin: false, //因为使用了简易双向绑定，不支持路径
     mobile: "",
@@ -45,6 +45,14 @@ Page({
       mobile: mobileInput
     })
     //console.log(this_.data.mobile);
+  },
+  getCodeInput: function (e) {
+    var this_ = this;
+    var codeInput = e.detail;
+    this_.setData({
+      code: codeInput
+    })
+    console.log(this_.data.code);
   },
   openPhoneLogin: function () { // 手机号登录
     this.data.isPhoneLogin = true;
@@ -162,7 +170,7 @@ Page({
                 wx.switchTab({
                   url: '/pages/mine/mine',
                   success () {
-                    console.log('success');
+                    console.log('success');//登录成功，保存到本地
                   },
                   fail (err) {
                     console.log(err);
@@ -189,6 +197,7 @@ Page({
         }
       });
     }
+    console.log(this_.data);
   },
   getPhoneNumber: function (res) { // 获取微信绑定手机号
     console.log(res),
@@ -219,17 +228,6 @@ Page({
       [e.currentTarget.dataset.value]: e.detail
     })
   }
-  /*
-  mobileInput(e) {// 获取输入值
-    this.setData({
-      mobile : e.detail
-    })
-  },
-  vfCodeInput(e) {
-    this.setData({
-      code : e.detail
-    })
-  }*/
 })
 /*
                 success: function() { //以下内容暂未修改完成
