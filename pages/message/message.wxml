@@ -1,7 +1,7 @@
 <!--pages/message/message.wxml-->
 <view class="messagePage">
-  <view class="navBar">
-    <navigation-bar bind:refresh="refresh"></navigation-bar>
+  <view class="navBar" bindtap="onRefresh" style="height: 40px;">
+    <image class="logo_mini" src="/static/images/logo_mini.png"></image>
   </view>
   <view class="message_content">
     <view bindtap="friendZoneNewReply" class="notification">

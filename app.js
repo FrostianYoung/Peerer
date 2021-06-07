@@ -9,7 +9,7 @@ App({
       success: function (res) {
         if(res.code){
           console.log(res.code);
-          wx.request({
+          /*wx.request({
             url: this_.globalData.url+'/v1/minapp/user/code2session',
             data: {
               'code': res.code
@@ -21,7 +21,7 @@ App({
                 wx.setStorage('mobile', res.phone);
               }
             },
-          })
+          })*/
         } else {
           console.log('获取用户登录态失败' + res.errMsg);
         }

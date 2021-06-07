@@ -2,17 +2,16 @@
   "pages": [
     "pages/mine/mine",
     "pages/login/login",
-    
     "pages/association/association",
     "pages/find/find",
-    "pages/message/message",
-    "components/component/home/settingBaseInfo"
+    "pages/message/message"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F8F8F8",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "usingComponents": {
     "van-action-sheet": "./dist/action-sheet/index",

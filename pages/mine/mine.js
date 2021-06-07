@@ -28,13 +28,13 @@ Page({
     mobile: "",
     code: "",
     codeText: "获取验证码",
-    currentTime: 3,
+    currentTime: 30,
     canGetCode: true, //获取验证码按钮是否可用
   },
   getDegree: function () {
     var this_ = this;
     wx.getStorage({
-      key: "degree",
+      key: "fullUserInfo",
       success: function (res) {
         this_.data.degree = res.data;
       }
@@ -81,9 +81,9 @@ Page({
     }).dictShowName;
   },
   toCircle: function (type, name, id, icon) {
-    this.data.topicType = type,
-      this.data.topiName = name,
-      this.data.topicId = id,
+    this.data.topicType = type;
+      this.data.topiName = name;
+      this.data.topicId = id;
       this.data.topicIcon = icon || "",
       wx.navigateTo({
         url: "/components/component/friendZoneCircle?topicId=" + this.data.topicId + "&topicType=" +
@@ -103,9 +103,9 @@ Page({
         success: function (res) {
           if (res.data.accessToken) {
             wx.getStorage({
-              key: "userInfo",
+              key: "fullUserInfo",
               success: function (userInfo) {
-                this_.data.userId = userInfo.data.id,
+                this_.data.userId = userInfo.data.result.id
                   wx.request({
                     url: 'https://peerer.cn/api/v1/uc/member/' + this_.data.userId,
                     method: "GET",
@@ -114,9 +114,12 @@ Page({
                     },
                     success: function (res1) {
                       if (res1.data.status) {
-                        this_.userInfo = res1.data.result;
-                        if (this_.userInfo.avatar && this_.userInfo.nickName && this_.userInfo.sex) {
-                          if (this_.userInfo.educationList) {} else {
+                        this_.setData({
+                          userInfo: res1.data.result
+                        });
+                        console.log(this_.data.userInfo);
+                        if (this_.data.userInfo.avatar && this_.data.userInfo.nickName && this_.data.userInfo.sex) {
+                          if (this_.data.userInfo.educationList) {} else {
                             wx.showToast({
                               title: '请完善教育信息',
                             })
@@ -136,7 +139,7 @@ Page({
                       } else {
                         console.log(res1.data.error);
                         wx.hideLoading(),
-                          wx.stopPullDownRefresh();
+                        wx.stopPullDownRefresh();
                       }
                     },
                     fail(err) {
@@ -144,7 +147,7 @@ Page({
                         wx.stopPullDownRefresh(),
                         console.log(err);
                     }
-                  }),
+                  });
                   wx.request({
                     url: 'https://peerer.cn/api/v1/bbs/post/discover',
                     method: "GET",
@@ -216,7 +219,7 @@ Page({
   },
   settingBaseInfo: function () {
     wx.navigateTo({
-      url: '/components/component/home/settingBaseInfo',
+      url: '/pages/settingBaseInfo/settingBaseInfo',
       fail: function (err) {
         console.log(err);
       }
@@ -426,7 +429,7 @@ Page({
       wx.showLoading({
           title: '正在获取验证码',
           icon: 'none'
-        }),
+        });
         wx.request({
           url: 'https://peerer.cn/api/v1/uc/member/verifycode',
           method: 'POST',
@@ -455,9 +458,9 @@ Page({
                 icon: 'none'
               })
           }
-        })
+        });
       this_.setData({
-        canGetCode: true
+        canGetCode: false
       })
       var currentTime = this_.data.currentTime;
       var interval = setInterval(function () {
@@ -468,8 +471,7 @@ Page({
         if (currentTime <= 0) {
           clearInterval(interval);
           this_.setData({
-            currentTime: 3,
-            canGetCode: false,
+            canGetCode: true,
             codeText: '重新获取'
           })
         }
@@ -498,13 +500,19 @@ Page({
               title: '登陆成功',
               icon: 'none'
             });
+            this_.setData({
+              isLogin: true,
+              isPhoneLogin: true
+            })
             this_.initLogin(res);
+            this_.loadData();
             this_.closeLoginPopUp();
+            wx.hideLoading();
           } else {
             wx.hideLoading(),
               console.log(res.data.error),
               wx.showToast({
-                title: '登录失败，请重试' + res.data.error.errorMessage,
+                title: '登录失败，请重试 ' + res.data.error.errorMessage,
                 icon: 'none'
               })
           }
@@ -605,11 +613,107 @@ Page({
               wx.setStorage({
                 key: "fullUserInfo",
                 data: res1.data,
+                success (res2) {
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/base/dict/degree/values',
+                    method: 'GET',
+                    header: {
+                      Authorization: accessToken
+                    },
+                    success (res3) {
+                      wx.setStorage({
+                        key: 'degree',
+                        data: res3.data.result,
+                        fail (err) {
+                          console.log(res3.data.error);
+                        }
+                      })
+                    },
+                    fail (err) {
+                      console.log(err);
+                    }
+                  });
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/base/dict/experience/values',
+                    method: 'GET',
+                    header: {
+                      Authorization: accessToken
+                    },
+                    success (res3) {
+                      wx.setStorage({
+                        key: 'experience',
+                        data: res3.data.result,
+                        fail (err) {
+                          console.log(res3.data.error);
+                        }
+                      })
+                    },
+                    fail (err) {
+                      console.log(err);
+                    }
+                  });
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/base/dict/industry/values',
+                    method: 'GET',
+                    header: {
+                      Authorization: accessToken
+                    },
+                    success (res3) {
+                      wx.setStorage({
+                        key: 'industry',
+                        data: res3.data.result,
+                        fail (err) {
+                          console.log(res3.data.error);
+                        }
+                      })
+                    },
+                    fail (err) {
+                      console.log(err);
+                    }
+                  });
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/base/dict/specialism/values',
+                    method: 'GET',
+                    header: {
+                      Authorization: accessToken
+                    },
+                    success (res3) {
+                      wx.setStorage({
+                        key: 'specialism',
+                        data: res3.data.result,
+                        fail (err) {
+                          console.log(res3.data.error);
+                        }
+                      });
+                    },
+                    fail (err) {
+                      console.log(err);
+                    }
+                  });
+                  wx.request({
+                    url: 'https://peerer.cn/api/v1/base/dict/experience/values',
+                    method: 'GET',
+                    header: {
+                      Authorization: accessToken
+                    },
+                    success (res3) {
+                      wx.setStorage({
+                        key: 'experience',
+                        data: res3.data.result,
+                        fail (err) {
+                          console.log(res3.data.error);
+                        }
+                      })
+                    },
+                    fail (err) {
+                      console.log(err);
+                    }
+                  });
+                },
                 fail (err) {
                   console.log(err);
                 }
               });
-              console.log(res1.data);
             } else {
               console.log(res1.data.error);
             }
@@ -625,8 +729,8 @@ Page({
     })
   },
   refresh: function () {
-    this.phoneLogin(),
-      this.loadData(),
-      this.getMessageNumber();
+    this.initLogin(),
+    this.loadData(),
+    this.getMessageNumber();
   }
 })

@@ -1,9 +1,11 @@
 <!--pages/association.wxml-->
 <view class="associationPage">
     <view class="navBar">
-        <navigation-bar bind:refresh="onRefresh"></navigation-bar>
+        <view class="navBar" bindtap="onRefresh" style="height: 40px;">
+            <image class="logo_mini" src="/static/images/logo_mini.png"></image>
+        </view>
         <view bindtap="onRefresh" wx:if="{{showFloatingButton}}">
-            <text class="icon">icon</text>
+            <text class="t-icon cloudokmd-refresh "></text>
         </view> 
     </view>
     <view class="association_content">

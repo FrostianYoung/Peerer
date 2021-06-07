@@ -1,7 +1,7 @@
 <!--pages/find/find.wxml-->
 <view class="findPage">
-  <view class="navBar">
-    <navigation-bar bind:refresh="_e" ></navigation-bar>
+    <view class="navBar" bindtap="onRefresh" style="height: 40px;">
+    <image class="logo_mini" src="/static/images/logo_mini.png"></image>
   </view>
 	<view class="find_content" style="{{'padding-top:'+statusBarHeight+';'}}">
 		<view style="" wx:if="{{tagList}}">
@@ -52,8 +52,8 @@
             <text  style="margin:16px 0px;coloc:#101010;">👀 推荐标签将根据个人主页的信息显示
         完善主页获得更准确的推荐标签 🏷️</text>
             <view bindtap="__e"  data-event-opts="{{[ [ 'tap',[ [ 'toPersonal',['$event'] ] ] ] ]}}" style="margin:16px 0px;width:164px;height:36px;line-height:20px;border-radius:20px;background-color:rgba(150, 200, 250, 100);color:rgba(16, 16, 16, 100);font-size:14px;display:flex;align-items:center;justify-content:center;">
-                <text class="icon" style="margin-right:4px;color:white;"></text>
-                <text  style="color:white;">去完善</text>
+                <text class="t-icon cloudoksetting-copy-copy" style="margin-right:4px;color:white;"></text>
+                <text style="color:white;">去完善</text>
             </view>
         </view>
     </u-popup>
